@@ -1,270 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <title>CaterServ - Catering Services Website Template</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="" name="keywords">
-        <meta content="" name="description">
+<head>
+    <meta charset="utf-8">
+    <title>FoodSharing Map</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
-        <!-- Google Web Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playball&display=swap" rel="stylesheet">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playball&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-        <!-- Icon Font Stylesheet -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-        <!-- Libraries Stylesheet -->
-        <link href="lib/animate/animate.min.css" rel="stylesheet">
-        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/owl.carousel.min.css" rel="stylesheet">
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/owl.carousel.min.css" rel="stylesheet">
 
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
-    </head>
-
-    <body>
-
-        <!-- Spinner Start -->
-        <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-            <div class="spinner-grow text-primary" role="status"></div>
-        </div>
-        <!-- Spinner End -->
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/blog.css">
+    <link rel="icon" href="./img/removed-background.png" type="image/x-icon">
 
 
-        <!-- Navbar start -->
-        <div class="container-fluid nav-bar">
-            <div class="container">
-                <nav class="navbar navbar-light navbar-expand-lg py-4">
-                    <a href="index.html" class="navbar-brand">
-                        <h1 class="text-primary fw-bold mb-0">FoodSharing<span class="text-dark">Map</span> </h1>
-                    </a>
-                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="fa fa-bars text-primary"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <div class="navbar-nav mx-auto">
-                            <a href="index.html" class="nav-item nav-link ">Home</a>
-                            <a href="map.html" class="nav-item nav-link">Map</a>
-                            <a href="blog.html" class="nav-item nav-link active">Blog</a>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
-                            <a href="event.html" class="nav-item nav-link">Event</a>
-                        </div>
-                        <button class="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
-                        <a href="" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Book Now</a>
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar start -->
+    <div class="container-fluid nav-bar header">
+        <div class="container">
+            <nav class="navbar navbar-light navbar-expand-lg py-4">
+                <a href="index.html" class="navbar-brand">
+                    <h1 class="text-primary fw-bold mb-0">FoodSharing<span class="text-dark">Map</span> </h1>
+                </a>
+                <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars text-primary"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav mx-auto">
+                        <a href="index.html" class="nav-item nav-link ">Home</a>
+                        <a href="map.html" class="nav-item nav-link">Map</a>
+                        <a href="blog.html" class="nav-item nav-link active">Blog</a>
+                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="event.html" class="nav-item nav-link">Event</a>
                     </div>
-                </nav>
-            </div>
-        </div>
-        <!-- Navbar End -->
-
-
-        <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search..." class="search-input">
+                        <button id="searchButton" class="search-btn" type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
                     </div>
-                    <div class="modal-body d-flex align-items-center">
-                        <div class="input-group w-75 mx-auto d-flex">
-                            <input type="search" class="form-control bg-transparent p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                        </div>
+                    <a href="" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Book Now</a>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+
+    <!-- Modal Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center">
+                    <div class="input-group w-75 mx-auto d-flex">
+                        <input type="search" class="form-control bg-transparent p-3" placeholder="keywords"
+                            aria-describedby="search-icon-1">
+                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Modal Search End -->
+    </div>
+    <!-- Modal Search End -->
 
 
-        <!-- Hero Start -->
-        <div class="container-fluid bg-light py-6 my-6 mt-0">
-            <div class="container text-center animated bounceInDown">
-                <h1 class="display-1 mb-4">Our Blog</h1>
-                <ol class="breadcrumb justify-content-center mb-0 animated bounceInDown">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                    <li class="breadcrumb-item text-dark" aria-current="page">Our Blog</li>
-                </ol>
-            </div>
+    <!-- Hero Start -->
+
+    <!-- Hero End -->
+
+
+    <!-- Blog Start -->
+    <div class="wrapper">
+        <div style="color:rgb(114, 116, 117);">
+            <span>Thg 09 13, 24 </span>
+            <ul style="display: inline-block; margin-left: 20px;">
+                <li> 5 phút đọc</li>
+            </ul>
+
         </div>
-        <!-- Hero End -->
 
-
-        <!-- Blog Start -->
-        <div class="container-fluid blog py-6">
-            <div class="container">
-                <div class="text-center wow bounceInUp" data-wow-delay="0.1s">
-                    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3">Our Blog</small>
-                    <h1 class="display-5 mb-5">Be First Who Read News</h1>
-                </div>
-                <div class="row gx-4 justify-content-center">
-                    <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-delay="0.1s">
-                        <div class="blog-item">
-                            <div class="overflow-hidden rounded">
-                                <img src="img/blog-1.jpg" class="img-fluid w-100" alt="">
-                            </div>
-                            <div class="blog-content mx-4 d-flex rounded bg-light">
-                                <div class="text-dark bg-primary rounded-start">
-                                    <div class="h-100 p-3 d-flex flex-column justify-content-center text-center">
-                                        <p class="fw-bold mb-0">16</p>
-                                        <p class="fw-bold mb-0">Sep</p>
-                                    </div>
-                                </div>
-                                <a href="#" class="h5 lh-base my-auto h-100 p-3">How to get more test in your food from</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-delay="0.3s">
-                        <div class="blog-item">
-                            <div class="overflow-hidden rounded">
-                                <img src="img/blog-2.jpg" class="img-fluid w-100" alt="">
-                            </div>
-                            <div class="blog-content mx-4 d-flex rounded bg-light">
-                                <div class="text-dark bg-primary rounded-start">
-                                    <div class="h-100 p-3 d-flex flex-column justify-content-center text-center">
-                                        <p class="fw-bold mb-0">16</p>
-                                        <p class="fw-bold mb-0">Sep</p>
-                                    </div>
-                                </div>
-                                <a href="#" class="h5 lh-base my-auto h-100 p-3">How to get more test in your food from</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-delay="0.5s">
-                        <div class="blog-item">
-                            <div class="overflow-hidden rounded">
-                                <img src="img/blog-3.jpg" class="img-fluid w-100" alt="">
-                            </div>
-                            <div class="blog-content mx-4 d-flex rounded bg-light">
-                                <div class="text-dark bg-primary rounded-start">
-                                    <div class="h-100 p-3 d-flex flex-column justify-content-center text-center">
-                                        <p class="fw-bold mb-0">16</p>
-                                        <p class="fw-bold mb-0">Sep</p>
-                                    </div>
-                                </div>
-                                <a href="#" class="h5 lh-base my-auto h-100 p-3">How to get more test in your food from</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="content">
+            <h1 style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Giấy Nẩy Mầm – Giải Pháp Bền Vững
+                Cho Một Tương Lai Xanh</h1>
+            <span style="float: right;"> Bởi <a href="" class="TDT_blog">TDT Blog</a></span>
+            <img src="img/mầm.webp" alt="">
+            <p>Trong thời đại mà tính bền vững ngày càng trở nên quan trọng, giấy nẩy mầm nổi lên như một lựa chọn hoàn
+                hảo, thân thiện với môi trường, thay thế cho giấy truyền thống. Không chỉ giúp giảm thiểu rác thải, giấy
+                nẩy mầm còn khuyến khích bảo vệ thiên nhiên. Vậy giấy nẩy mầm là gì, và tại sao bạn nên cân nhắc sử dụng
+                nó? Hãy cùng khám phá tất tần tật về loại giấy đặc biệt này, từ định nghĩa, lợi ích đến các ứng dụng phổ
+                biến trong cuộc sống.</p>
         </div>
-        <!-- Blog End -->
+        <div class="content">
+            <h4>Giấy Gieo Nẩy Mầm Là Gì?</h4>
+            <img src="img/Wildflower-seed-paper_1024x1024.webp" alt="">
+            <p>Giấy nẩy mầm, hay còn gọi là giấy trồng cây, là loại giấy có thể phân huỷ và có chứa các hạt giống bên
+                trong. Khi được trồng xuống đất, giấy sẽ phân hủy và hạt giống sẽ nảy mầm, phát triển thành cây, hoa
+                hoặc rau. Được làm từ vật liệu tái chế, giấy nẩy mầm kết hợp giữa nghệ thuật làm giấy và làm vườn bền
+                vững, mang đến một giải pháp sáng tạo giúp giảm thiểu tác động đến môi trường.</p>
+
+        </div>
+        <div class="content">
+            <h4>Giấy Nẩy Mầm Được Làm Như Thế Nào?</h4>
+            <img src="img/60_1024x1024.webp" alt="">
+            <p>Quá trình sản xuất giấy nẩy mầm bắt đầu với việc nghiền bột giấy tái chế rồi trộn với hạt giống. Hỗn hợp
+                này sau đó được dàn mỏng và sấy khô thành từng tờ giấy. Vì giấy được làm mà không sử dụng hóa chất hay
+                màu nhuộm độc hại, nên hoàn toàn an toàn cho môi trường và đảm bảo hạt giống có thể nảy mầm khi được
+                trồng. Quy trình sản xuất thân thiện với môi trường này giúp giấy nẩy mầm trở thành lựa chọn yêu thích
+                của những người mong muốn giảm thiểu dấu chân carbon của mình.</p>
+
+        </div>
+        <div class="content">
+            <h4>Lợi Ích Của Giấy Nẩy Mầm</h4>
+            <ol>
+                <li>
+                    <b>Giảm Thiểu Rác Thải:</b>
+                    Giấy nẩy mầm hoàn toàn phân hủy sinh học và có thể ủ phân, nghĩa là nó không góp phần vào lượng rác
+                    thải chôn lấp. Thay vào đó, giấy biến thành những cây xanh tuyệt đẹp, góp phần làm xanh môi trường.
+                </li>
+                <li>
+                    <b>Thúc Đẩy Đa Dạng Sinh Học:</b>
+                    Bằng cách trồng những hạt giống có trong giấy, bạn có thể giúp trồng thêm nhiều loại cây, hoa, rau
+                    củ, hỗ trợ động vật hoang dã và các hệ sinh thái địa phương.
+                </li>
+                <li>
+                    <b>Thể Hiện Sự Tinh Tế:</b> Cho dù được sử dụng trong thiệp mời, danh thiếp hay đồ văn phòng phẩm,
+                    giấy nẩy mầm luôn mang lại nét độc đáo và tinh tế, thể hiện cam kết với bảo vệ môi trường.
+                </li>
+                <li>
+                    <b>Thể Hiện Sự Tinh Tế:</b> Cho dù được sử dụng trong thiệp mời, danh thiếp hay đồ văn phòng phẩm,
+                    giấy nẩy mầm luôn mang lại nét độc đáo và tinh tế, thể hiện cam kết với bảo vệ môi trường.
+                </li>
+            </ol>
+        </div>
+        <div class="content">
+            <h4>Các Ứng Dụng Của Giấy nẩy mầm</h4>
+            <p>Giấy nẩy mầm có thể được ứng dụng trong nhiều cách sáng tạo khác nhau, khiến nó trở thành lựa chọn đa
+                năng cho cá nhân, doanh nghiệp và các hoạt động quảng bá. Dưới đây là một số ứng dụng phổ biến:</p>
+            <ol>
+                <li>
+                    <b>Thiệp Mời Đám Cưới:</b>
+                    Gây ấn tượng với khách mời bằng những thiệp mời đám cưới làm từ giấy nẩy mầm, mà họ có thể trồng để
+                    cho ra những loài hoa, rau củ, tạo nên kỷ niệm lâu dài về ngày trọng đại của bạn.
+                </li>
+                <li>
+                    <b>Thiệp Chúc Mừng:</b>
+                    Gửi những lời chúc thân thiện với môi trường bằng các thiệp chúc mừng từ giấy nẩy mầm cho sinh nhật,
+                    lễ hội hay các dịp đặc biệt khác, giúp thông điệp của bạn mang theo hạt giống gieo trồng thành những
+                    điều tốt đẹp.
+                </li>
+                <img src="img/base64-1711521864456803757916.webp" alt="">
+
+                <li>
+                    <b>Danh Thiếp:</b> Tạo nên dấu ấn bền vững với danh thiếp từ giấy nẩy mầm, không chỉ đại diện cho
+                    thương hiệu của bạn mà còn thúc đẩy ý thức bảo vệ môi trường.
+                </li>
+                <li>
+                    <b>Quảng Cáo Sự Kiện:</b> Sử dụng giấy nẩy mầm cho tờ rơi, brochure hay tài liệu quảng bá, đảm bảo
+                    sự kiện của bạn không chỉ để lại dấu ấn mà còn đóng góp tích cực cho hành tinh.
+                </li>
+            </ol>
+        </div>
+        <div class="content">
+            <h4>Cách Trồng Giấy Nẩy Mầm</h4>
+            <img src="img/61_1024x1024.webp" alt="">
+            <p>Trồng giấy nẩy mầm rất đơn giản và thú vị. Làm theo các bước sau để thấy giấy của bạn biến thành cây:</p>
+            <ol>
+                <li>
+                    <b>Chuẩn Bị Đất:</b>
+                    Chọn chậu có khả năng thoát nước tốt hoặc khu vực ngoài trời có đất tơi xốp,
+                    màu mỡ. Làm ẩm nhẹ đất.
+                </li>
+                <li>
+                    <b>Trồng Giấy:</b>
+                    Đặt giấy nẩy mầm lên bề mặt đất và phủ nhẹ một lớp đất mỏng lên trên, khoảng 3mm.
+                </li>
+                <li>
+                    <b>Tưới Nước:</b>
+                    Sau khi trồng, tưới nước đủ ẩm cho giấy, đảm bảo giấy được thấm nước nhưng không
+                    quá đẫm.
+                </li>
+                <li>
+                    <b>Ánh Sáng và Chăm Sóc: </b>
+                    Đặt chậu cây ở nơi có nhiều ánh sáng tự nhiên. Giữ đất ẩm bằng cách
+                    tưới nước thường xuyên, tránh tưới quá nhiều.
+                </li>
+                <li>
+                    <b>Theo Dõi Cây Nảy Mầm:</b>
+                    Với sự chăm sóc đúng cách, hạt giống sẽ nảy mầm và sớm xuất hiện những
+                    cây non. Tiếp tục tưới nước khi cần và tận hưởng thành quả xanh tươi của mình!
+                </li>
+
+            </ol>
+            <p>Giấy nẩy mầm không chỉ là một lựa chọn thay thế thân thiện với môi trường cho giấy truyền thống mà còn là
+                một bước nhỏ hướng tới một hành tinh xanh hơn. Bằng cách chọn giấy nẩy mầm, bạn không chỉ giúp giảm rác
+                thải mà còn góp phần vào việc bảo vệ thiên nhiên. Cho dù bạn đang lên kế hoạch cho sự kiện, gửi thiệp
+                chúc mừng hay tìm kiếm giải pháp kinh doanh bền vững, giấy nẩy mầm luôn mang lại những lợi ích đáng giá.
+            </p>
+        </div>
+    </div>
+    <div class="slider-container">
+        <h1 style="font-size: 20px;">ĐỀ XUẤT</h1>
+        <button class="nav-btn prev-btn" onclick="moveSlider(-1)">‹</button>
+        <div class="slider-wrapper" id="sliderWrapper">
+            <div class="slider-item">
+                <a href="./blog2.html"><img src="img/song-xanh__2__6a8a15f6d25d415d9f30d9722f992825_grande.webp"
+                        alt="Image 5">
+                    <h5>“Sống Xanh” Có Khó Như Nhiều Người Nghĩ?</h5>
+                </a>
+                <p>
+                    <span>Bởi <a href="" class="TDT_blog">TDT Blog</a></span>
+                </p>
+            </div>
+            <div class="slider-item">
+                <a href=""><img src="img/XU_04238_3817f396-b51f-4266-9617-010eb9d699d4.webp" alt="Image 1">
+                    <h5>Giảm Vi Nhựa Trong Bao Bì Thực Phẩm: Giải Pháp An Toàn Bền Vững Cho Bạn</h5>
+                </a>
+                <p>
+                    <span>Bởi <a href="" class="TDT_blog">TDT Blog</a></span>
+                </p>
+            </div>
+            <div class="slider-item">
+                <a href=""><img src="img/60_1024x1024.webp" alt="Image 2">
+                    <h5>Giảm Vi Nhựa Trong Bao Bì Thực Phẩm: Giải Pháp An Toàn Bền Vững Cho Bạn</h5>
+                </a>
+                <p></p>
+                <span>Bởi <a href="" class="TDT_blog">TDT Blog</a></span>
+                </p>
+            </div>
+            <div class="slider-item">
+                <a href=""><img src="img/EQUO_Booth_2_58965fff-f731-4a2f-8afe-749904b15eb9.webp" alt="Image 3">
+                    <h5>Cách Tổ Chức Sự Kiện Không Nhựa: Sử Dụng Dụng Cụ Ăn Uống Phân Hủy Hoàn Toàn</h5>
+                </a>
+                <p>
+                    <span>Bởi <a href="" class="TDT_blog">TDT Blog</a></span>
+                </p>
+            </div>
+            <div class="slider-item">
+                <a href=""><img src="img/52_0bbcb33d-ea70-4eb7-a2eb-b9a2330a5203.webp" alt="Image 4">
+                    <h5>Sản Phẩm Phân Hủy Hoàn Toàn Giúp Doanh Nghiệp Giảm Thiểu Carbon Như Thế Nào?</h5>
+                    <p>
+                        <span>Bởi <a href="" class="TDT_blog">TDT Blog</a></span>
+                    </p>
+            </div>
+
+        </div>
+        <button class="nav-btn next-btn" onclick="moveSlider(1)">›</button>
+    </div>
+    <!-- Blog End -->
 
 
-        <!-- Footer Start -->
-        <div class="container-fluid footer py-6 my-6 mb-0 bg-light wow bounceInUp" data-wow-delay="0.1s">
-            <div class="container">
+
+
+
+    <!-- Copyright Start -->
+    <!-- Remove the container to extend Footer to full width -->
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start text-white" style="background-color: #474646">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Links -->
+            <section class="">
+                <!--Grid row-->
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-item">
-                            <h1 class="text-primary">Cater<span class="text-dark">Serv</span></h1>
-                            <p class="lh-lg mb-4">There cursus massa at urnaaculis estieSed aliquamellus vitae ultrs condmentum leo massamollis its estiegittis miristum.</p>
-                            <div class="footer-icon d-flex">
-                                <a class="btn btn-primary btn-sm-square me-2 rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-primary btn-sm-square me-2 rounded-circle" href=""><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="btn btn-primary btn-sm-square me-2 rounded-circle"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="btn btn-primary btn-sm-square rounded-circle"><i class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
+                    <!-- <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <img src="./img/logo.jpg" alt="">
+                      </div> -->
+                    <!-- Grid column -->
+
+                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 text-white">
+                        <h6 class="text-uppercase mb-4 font-weight-bold">
+                            Hướng Đến Lối Sống Xanh
+                        </h6>
+                        <p>
+                            Giảm lãng phí thực phẩm và kết nối cộng đồng để xây dựng một lối sống xanh và bền vững hơn.
+                        </p>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-item">
-                            <h4 class="mb-4">Special Facilities</h4>
-                            <div class="d-flex flex-column align-items-start">
-                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Cheese Burger</a>
-                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Sandwich</a>
-                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Panner Burger</a>
-                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Special Sweets</a>
-                            </div>
-                        </div>
+                    <!-- Grid column -->
+
+                    <hr class="w-100 clearfix d-md-none" />
+
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+
+                    <hr class="w-100 clearfix d-md-none" />
+
+                    <!-- Grid column -->
+                    <hr class="w-100 clearfix d-md-none" />
+
+                    <!-- Grid column -->
+                    <div class="col-md-5 col-lg-5 col-xl-5 mx-auto mt-3 text-white">
+                        <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+                        <p><i class="fas fa-home mr-3"></i> Cao đẳng Anh Quốc BTEC, FPT Hà Nội</p>
+                        <p><i class="fas fa-envelope mr-3"></i> tdt.tech@gmail.com</p>
+                        <p><i class="fas fa-phone mr-3"></i> 0867047229</p>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-item">
-                            <h4 class="mb-4">Contact Us</h4>
-                            <div class="d-flex flex-column align-items-start">
-                                <p><i class="fa fa-map-marker-alt text-primary me-2"></i> 123 Street, New York, USA</p>
-                                <p><i class="fa fa-phone-alt text-primary me-2"></i> (+012) 3456 7890 123</p>
-                                <p><i class="fas fa-envelope text-primary me-2"></i> info@example.com</p>
-                                <p><i class="fa fa-clock text-primary me-2"></i> 26/7 Hours Service</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-item">
-                            <h4 class="mb-4">Social Gallery</h4>
-                            <div class="row g-2">
-                                <div class="col-4">
-                                     <img src="img/menu-01.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
-                                <div class="col-4">
-                                     <img src="img/menu-02.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
-                                <div class="col-4">
-                                     <img src="img/menu-03.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
-                                <div class="col-4">
-                                     <img src="img/menu-04.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
-                                <div class="col-4">
-                                     <img src="img/menu-05.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
-                                <div class="col-4">
-                                     <img src="img/menu-06.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3 text-white">
+                        <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
+
+                        <!-- Facebook -->
+                        <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998" href="#!"
+                            role="button"><i class="fab fa-facebook-f"></i></a>
+
+                        <!-- Twitter -->
+                        <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee" href="#!"
+                            role="button"><i class="fab fa-twitter"></i></a>
+
+                        <!-- Google -->
+                        <a class="btn btn-primary btn-floating m-1" style="background-color: #dd4b39" href="#!"
+                            role="button"><i class="fab fa-google"></i></a>
+
+                        <!-- Instagram -->
+                        <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac" href="#!"
+                            role="button"><i class="fab fa-instagram"></i></a>
+
+                        <!-- Linkedin -->
+                        <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca" href="#!"
+                            role="button"><i class="fab fa-linkedin-in"></i></a>
+                        <!-- Github -->
+                        <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="#!"
+                            role="button"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
-            </div>
+                <!--Grid row-->
+            </section>
+            <!-- Section: Links -->
         </div>
-        <!-- Footer End -->
+        <!-- Grid container -->
 
-
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright bg-dark py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
-                    </div>
-                    <div class="col-md-6 my-auto text-center text-md-end text-white">
-                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
-                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
-                    </div>
-                </div>
-            </div>
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(17, 11, 11, 0.2)">
+            © 2024 Copyright:
+            <a class="text-white" href=""> GreenLife & FoodSharing.</a>
         </div>
+        <!-- End of .container -->
+
         <!-- Copyright End -->
 
 
         <!-- Back to Top -->
-        <a href="#" class="btn btn-md-square btn-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+        <a href="#" class="btn btn-md-square btn-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
 
-        
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-    </body>
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/counterup/counterup.min.js"></script>
+        <script src="lib/lightbox/js/lightbox.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+        <script src="/TDT-frontend/js/blog.js"></script>
+
+</body>
 
 </html>
