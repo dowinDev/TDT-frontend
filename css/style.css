@@ -1,18 +1,25 @@
-
 /*** Spinner Start ***/
 #spinner {
     opacity: 0;
     visibility: hidden;
     transition: opacity .8s ease-out, visibility 0s linear .5s;
     z-index: 99999;
- }
+    position: fixed;
+}
 
- #spinner.show {
-     transition: opacity .8s ease-out, visibility 0s linear .0s;
-     visibility: visible;
-     opacity: 1;
- }
+#spinner.show {
+    transition: opacity .8s ease-out, visibility 0s linear .0s;
+    visibility: visible;
+    opacity: 1;
+}
+
 /*** Spinner End ***/
+.header {
+    position: fixed;
+    z-index: 99;
+    opacity: 9;
+}
+
 .search-container {
     display: flex;
     align-items: center;
@@ -22,7 +29,7 @@
 .search-input {
     width: 0;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #7d7b7b;
     border-radius: 50px;
     outline: none;
     transition: width 0.3s ease;
@@ -50,12 +57,22 @@
     z-index: 99;
 }
 
-h1, h2, h3, .h1, .h2, .h3 {
+h1,
+h2,
+h3,
+.h1,
+.h2,
+.h3 {
     font-weight: 400 !important;
-    font-family: 'Playball', cursive !important;
+    font-family: 'Gill Sans', sans-serif;
 }
 
-h4, h5, h6, .h4, .h5, .h6 {
+h4,
+h5,
+h6,
+.h4,
+.h5,
+.h6 {
     font-weight: 600 !important;
     font-family: 'Open Sans', sans-serif !important;
 }
@@ -121,6 +138,7 @@ h4, h5, h6, .h4, .h5, .h6 {
     justify-content: center;
     font-weight: normal;
 }
+
 /*** Button End ***/
 
 
@@ -131,7 +149,7 @@ h4, h5, h6, .h4, .h5, .h6 {
 }
 
 .navbar .navbar-nav .nav-link {
-    padding: 10px 12px;
+    padding: 10px 20px;
     font-weight: 600;
     font-size: 17px;
     transition: .5s;
@@ -161,7 +179,7 @@ h4, h5, h6, .h4, .h5, .h6 {
         transition: .5s;
         opacity: 0;
     }
-    
+
     .navbar .nav-item:hover .dropdown-menu {
         transform: rotateX(0deg);
         visibility: visible;
@@ -177,6 +195,7 @@ h4, h5, h6, .h4, .h5, .h6 {
 #searchModal .modal-content {
     background-color: rgba(255, 255, 255, .95);
 }
+
 /*** Navbar End ***/
 
 
@@ -201,6 +220,7 @@ h4, h5, h6, .h4, .h5, .h6 {
 .event .event-img:hover .event-overlay {
     opacity: 1;
 }
+
 /*** Events End ***/
 
 
@@ -256,6 +276,7 @@ h4, h5, h6, .h4, .h5, .h6 {
 .service-item .service-content-icon a.btn-primary {
     transition: 1s !important;
 }
+
 /*** Services End ***/
 
 
@@ -267,6 +288,7 @@ h4, h5, h6, .h4, .h5, .h6 {
 .menu .menu-item .border-bottom {
     border-bottom-style: dashed !important;
 }
+
 /*** Menu End ***/
 
 
@@ -387,6 +409,7 @@ h4, h5, h6, .h4, .h5, .h6 {
     background: #000000;
     opacity: 1;
 }
+
 /*** Youtube Video End ***/
 
 
@@ -416,6 +439,7 @@ h4, h5, h6, .h4, .h5, .h6 {
 .blog-item:hover .blog-content a.btn h5 {
     color: var(--bs-primary) !important;
 }
+
 /*** Blog End ***/
 
 
@@ -462,6 +486,7 @@ h4, h5, h6, .h4, .h5, .h6 {
 .team-item:hover .team-content p {
     color: var(--bs-white);
 }
+
 /*** Team End ***/
 
 
@@ -479,6 +504,7 @@ h4, h5, h6, .h4, .h5, .h6 {
 .testimonial-carousel.owl-rtl .testimonial-item {
     direction: ltr !important;
 }
+
 /*** testimonial End ***/
 
 
@@ -494,8 +520,20 @@ h4, h5, h6, .h4, .h5, .h6 {
 .footer .footer-item a.text-body:hover {
     color: var(--bs-primary) !important;
 }
+
+footer {
+    border-radius: 8px;
+    background: rgba(0, 0, 0, .05);
+    color: #fff;
+    font-size: 20px;
+    line-height: 2;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+footer h6 {
+    font-size: 24px;
+    color: #fff;
+
+}
+
 /*** Footer End ***/
-
-
-
-
