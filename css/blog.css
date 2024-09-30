@@ -1,17 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-color: rgb(255, 252, 248);
+    max-width: 100%;
+    overflow-x: hidden;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 
 h1 {
     font-family: 'Gill Sans', sans-serif;
 }
 
 .wrapper {
-    width: 800px;
+    max-width: 1200px;
+    width: 80%;
     margin: 0 auto;
     color: rgb(20, 18, 18);
     padding-top: 150px;
+}
 
+.wrapper div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .TDT_blog {
@@ -21,41 +40,50 @@ h1 {
 }
 
 img {
-    width: 90%;
-    margin: 0 auto 20px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px 0;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
 }
 
 .content {
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
     padding: 20px;
     margin: 0 auto;
-    line-height: 1.7;
+}
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 20px 0;
+    font-weight: bold;
 }
 
 .content p {
+    font-size: 18px;
+    line-height: 1.6;
     text-align: justify;
-
-
+    margin: 20px 0;
 }
 
 .content h1 {
-    font-size: 46px;
+    font-size: 2.5rem;
     font-weight: 700;
-}
-
-.TDT_blog {
-    text-decoration: none;
-    color: #15b593;
-    font-weight: bold;
-    transition: color 0.3s ease;
 }
 
 .content h4 {
     margin: 10px 0;
     font-size: 30px;
     font-weight: 500;
-
 }
 
 ol li {
@@ -83,8 +111,12 @@ ol li:last-child {
     min-width: 33.33%;
     box-sizing: border-box;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
+/* Image styling */
 .slider-item img {
     width: 100%;
     height: 300px;
@@ -92,17 +124,15 @@ ol li:last-child {
     border-radius: 8px;
 }
 
+/* Title styling */
 .slider-item h5 {
     display: -webkit-box;
-    /* Định dạng box linh hoạt */
     -webkit-line-clamp: 2;
-    /* Giới hạn số dòng */
     -webkit-box-orient: vertical;
     font-size: 18px;
     margin: 10px 0;
     color: black;
     overflow: hidden;
-    /* Ẩn phần văn bản vượt ra ngoài */
     text-overflow: ellipsis;
 }
 
@@ -115,9 +145,10 @@ ol li:last-child {
     color: #1c1b1b;
 }
 
+/* Button Navigation */
 .nav-btn {
     position: absolute;
-    top: 40%;
+    top: 50%;
     transform: translateY(-50%);
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
@@ -132,10 +163,117 @@ ol li:last-child {
 }
 
 .next-btn {
-    right: 10px;
+    right: 12px;
 }
 
+/* Footer */
 footer {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
 
+@media (max-width: 768px) {
+    .navbar-nav {
+        display: block;
+    }
+
+    .wrapper {
+        max-width: 90%;
+        padding: 10px;
+    }
+
+    .content h1 {
+        font-size: 2rem;
+    }
+
+    .content p {
+        font-size: 16px;
+    }
+
+    .slider-wrapper {
+        flex-direction: column;
+    }
+
+    .slider-item {
+        min-width: 50%;
+        margin: 10px 0;
+    }
+
+    .search-container {
+        margin-top: 10px;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 10px 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .header {
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .navbar-toggler {
+        margin: 0 auto;
+    }
+
+    .wrapper {
+        max-width: 100%;
+        padding: 5px;
+    }
+
+    .content h1 {
+        font-size: 1.5rem;
+    }
+
+    .content p {
+        font-size: 14px;
+    }
+
+    .search-container {
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+
+    .search-input {
+        width: 80%;
+    }
+
+    .footer {
+        padding: 5px 0;
+        font-size: 14px;
+    }
+
+    .next-btn,
+    .prev-btn {
+        display: none !important;
+    }
+
+    .slider-item {
+        min-width: 100%;
+        margin: 0;
+
+    }
+
+    .slider-item img {
+        height: auto;
+
+    }
+
+    .slider-item h5 {
+        font-size: 16px;
+
+    }
+
+    p {
+        font-size: 14px;
+
+    }
+
+    .nav-btn {
+        padding: 8px;
+
+    }
 }
