@@ -118,3 +118,5 @@ document.getElementById("searchButton").addEventListener("click", function() {
         input.focus(); // focus vào input khi thanh được mở
     }
 });
+   
+
