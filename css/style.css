@@ -1,9 +1,10 @@
-/*** Spinner Start ***/
+/* ** Spinner Start ** */
+
 #spinner {
     opacity: 0;
     visibility: hidden;
     transition: opacity .8s ease-out, visibility 0s linear .5s;
-    z-index: 99999;
+    z-index: 999;
     position: fixed;
 }
 
@@ -15,9 +16,11 @@
 
 /*** Spinner End ***/
 .header {
-    position: fixed;
+    position: relative;
+    top: 0;
     z-index: 99;
     opacity: 9;
+
 }
 
 .search-container {
@@ -85,8 +88,8 @@ h6,
 }
 
 .py-6 {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
 }
 
 .wow,
@@ -212,7 +215,7 @@ h6,
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(212, 167, 98, 0.7);
+    background: rgba(233, 217, 193, 0.7);
     border-radius: 8px;
     transition: 0.5s;
     opacity: 0;
@@ -519,23 +522,32 @@ h6,
 
 
 /*** Footer Start ***/
-.footer .footer-item a.text-body:hover {
+/* .footer .footer-item a.text-body:hover {
     color: var(--bs-primary) !important;
-}
+} */
 
 footer {
-    border-radius: 8px;
-    background: rgba(0, 0, 0, .05);
-    color: #fff;
-    font-size: 20px;
-    line-height: 2;
+    font-family: 'Poppins', sans-serif'';
+    color: #6f6c7f;
+    font-size: 16px;
+    line-height: 1.6;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+footer i {
+    margin-right: 6px;
+
+}
+
 footer h6 {
-    font-size: 24px;
-    color: #fff;
+    font-size: 20px;
+    color: #070707;
+    font-weight: 400;
 
 }
 
 /*** Footer End ***/
+.copyright {
+
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
