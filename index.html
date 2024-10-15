@@ -12,11 +12,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playball&display=swap"
-        rel="stylesheet">
+          rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <!-- Icon Font Stylesheet -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
@@ -124,102 +124,101 @@
 </head>
 
 <body>
-    <!-- Spinner Start -->
-    <div id="spinner"
-        class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-        <div class="spinner-grow text-primary" role="status"></div>
-    </div>
-    <!-- Spinner End -->
-    <!-- Navbar start -->
-    <div class="container-fluid nav-bar header">
-        <div class="container">
-            <nav class="navbar navbar-light navbar-expand-lg py-4">
-                <a href="index.html" class="navbar-brand">
-                    <h1 class="text-primary fw-bold mb-0">FoodSharing<span class="text-dark">Map</span> </h1>
-                </a>
-                <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
+<!-- Spinner Start -->
+<div id="spinner"
+     class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" role="status"></div>
+</div>
+<!-- Spinner End -->
+<!-- Navbar start -->
+<div class="container-fluid nav-bar header">
+    <div class="container">
+        <nav class="navbar navbar-light navbar-expand-lg py-4">
+            <a href="index.html" class="navbar-brand">
+                <h1 class="text-primary fw-bold mb-0">FoodSharing<span class="text-dark">Map</span></h1>
+            </a>
+            <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars text-primary"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav mx-auto">
-                        <a href="index.html" class="nav-item nav-link active">Home</a>
-                        <a href="map.html" class="nav-item nav-link ">Map</a>
-                        <a href="blog.html" class="nav-item nav-link">Blog</a>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
-                        <a href="event.html" class="nav-item nav-link">Event</a>
-                    </div>
-                    <div class="search-container">
-                        <input type="text" id="searchInput" placeholder="Search..." class="search-input">
-                        <button id="searchButton" class="search-btn" type="submit">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </div>
-                    <a href="login/login.html"
-                        class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Login/Logout</a>
+                <span class="fa fa-bars text-primary"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav mx-auto">
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="map.html" class="nav-item nav-link ">Map</a>
+                    <a href="blog.html" class="nav-item nav-link">Blog</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="event.html" class="nav-item nav-link">Event</a>
                 </div>
-            </nav>
-        </div>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search..." class="search-input">
+                    <button id="searchButton" class="search-btn" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+                <a href="./register/login.html"
+                   class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Login/Logout</a>
+            </div>
+        </nav>
     </div>
-    <!-- Navbar End -->
+</div>
+<!-- Navbar End -->
 
 
-    <!-- Modal Search Start -->
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content rounded-0">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex align-items-center">
-                    <div class="input-group w-75 mx-auto d-flex">
-                        <input type="search" class="form-control bg-transparent p-3" placeholder="keywords"
-                            aria-describedby="search-icon-1">
-                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                    </div>
+<!-- Modal Search Start -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex align-items-center">
+                <div class="input-group w-75 mx-auto d-flex">
+                    <input type="search" class="form-control bg-transparent p-3" placeholder="keywords"
+                           aria-describedby="search-icon-1">
+                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modal Search End -->
+</div>
+<!-- Modal Search End -->
 
 
-
-    <!-- Hero Start -->
-    <div class="container-fluid bg-light py-6 my-6 mt-0">
-        <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-7 col-md-12">
-                    <h1 class="display-1 mb-4 animated bounceInDown">"Let's <span class="text-primary">share -
-                        </span>Reduce waste, help the community!"</h1>
-                    <a href="./map.html"
-                        class="btn btn-primary border-0 rounded-pill py-3 px-4 px-md-5 me-4 animated bounceInLeft">Book
-                        Now</a>
-                    <a href=""
-                        class="btn btn-primary border-0 rounded-pill py-3 px-4 px-md-5 animated bounceInLeft">Know
-                        More</a>
-                </div>
-                <div class="col-lg-5 col-md-12">
-                    <img src="img/hero.png" class="img-fluid rounded animated zoomIn" alt="">
-                </div>
+<!-- Hero Start -->
+<div class="container-fluid bg-light py-6 my-6 mt-0">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-7 col-md-12">
+                <h1 class="display-1 mb-4 animated bounceInDown" style="font-size: 65px;">"Let's <span class="text-primary">share
+                        </span> <p>Reduce waste, help the community!"</p></h1>
+                <a href="./map.html"
+                   class="btn btn-primary border-0 rounded-pill py-3 px-4 px-md-5 me-4 animated bounceInLeft">Book
+                    Now</a>
+                <a href="./knowMore.html"
+                   class="btn btn-primary border-0 rounded-pill py-3 px-4 px-md-5 animated bounceInLeft">Know
+                    More</a>
+            </div>
+            <div class="col-lg-5 col-md-12">
+                <img src="img/hero.png" class="img-fluid rounded animated zoomIn" alt="">
             </div>
         </div>
     </div>
-    <!-- hiển thị danh sách sản phẩm  -->
-    <div>
-        <div id="productList">
-            <!-- Các sản phẩm sẽ được hiển thị tại đây -->
-        </div>
+</div>
+<!-- hiển thị danh sách sản phẩm  -->
+<div>
+    <div id="productList">
+        <!-- Các sản phẩm sẽ được hiển thị tại đây -->
     </div>
+</div>
 
-    <script>
-        // Lấy thông tin sản phẩm từ LocalStorage
-        var productData = localStorage.getItem('product');
-        if (productData) {
-            var product = JSON.parse(productData);
+<script>
+    // Lấy thông tin sản phẩm từ LocalStorage
+    var productData = localStorage.getItem('product');
+    if (productData) {
+        var product = JSON.parse(productData);
 
-            var productHTML = `
+        var productHTML = `
                 <div class="product-card">
                     <img src="${product.image}" alt="Product Image" class="product-image">
                     <div class="product-info">
@@ -231,115 +230,114 @@
                 </div>
             `;
 
-            document.getElementById('productList').innerHTML = productHTML;
-        } else {
-            document.getElementById('productList').innerHTML = '<p>No product to display.</p>';
-        }
-    </script>
-    <!-- kết thúc danh dách hiện sản phẩm  -->
-    <!-- Hero End -->
-    <!-- About Satrt -->
-    <!-- Copyright Start -->
-    <footer class="text-center text-lg-start text-white" style="background-color: #474646">
-        <!-- Grid container -->
-        <div class="container p-4 pb-0">
-            <!-- Section: Links -->
-            <section class="">
-                <!--Grid row-->
-                <div class="row">
-                    <!-- <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                        <img src="./img/logo.jpg" alt="">
-                      </div> -->
-                    <!-- Grid column -->
+        document.getElementById('productList').innerHTML = productHTML;
+    } else {
+        document.getElementById('productList').innerHTML = '<p>No product to display.</p>';
+    }
+</script>
+<!-- kết thúc danh dách hiện sản phẩm  -->
+<!-- Hero End -->
+<!-- About Satrt -->
+<!-- Copyright Start -->
+<footer class="text-center text-lg-start" , style="color: #6f6c7f;">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0" style="color: #6f6c7f;">
+        <!-- Section: Links -->
+        <section class="">
+            <!--Grid row-->
+            <div class=" row">
 
-                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 text-white">
-                        <h6 class="text-uppercase mb-4 font-weight-bold">
-                            Hướng Đến Lối Sống Xanh
-                        </h6>
-                        <p>
-                            Giảm lãng phí thực phẩm và kết nối cộng đồng để xây dựng một lối sống xanh và bền vững hơn.
-                        </p>
-                    </div>
-                    <!-- Grid column -->
-
-                    <hr class="w-100 clearfix d-md-none" />
-
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-
-                    <hr class="w-100 clearfix d-md-none" />
-
-                    <!-- Grid column -->
-                    <hr class="w-100 clearfix d-md-none" />
-
-                    <!-- Grid column -->
-                    <div class="col-md-5 col-lg-5 col-xl-5 mx-auto mt-3 text-white">
-                        <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
-                        <p><i class="fas fa-home mr-3"></i> Cao đẳng Anh Quốc BTEC, FPT Hà Nội</p>
-                        <p><i class="fas fa-envelope mr-3"></i> tdt.tech@gmail.com</p>
-                        <p><i class="fas fa-phone mr-3"></i> 0867047229</p>
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3 text-white">
-                        <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
-
-                        <!-- Facebook -->
-                        <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998" href="#!"
-                            role="button"><i class="fab fa-facebook-f"></i></a>
-
-                        <!-- Twitter -->
-                        <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee" href="#!"
-                            role="button"><i class="fab fa-twitter"></i></a>
-
-                        <!-- Google -->
-                        <a class="btn btn-primary btn-floating m-1" style="background-color: #dd4b39" href="#!"
-                            role="button"><i class="fab fa-google"></i></a>
-
-                        <!-- Instagram -->
-                        <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac" href="#!"
-                            role="button"><i class="fab fa-instagram"></i></a>
-
-                        <!-- Linkedin -->
-                        <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca" href="#!"
-                            role="button"><i class="fab fa-linkedin-in"></i></a>
-                        <!-- Github -->
-                        <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="#!"
-                            role="button"><i class="fab fa-github"></i></a>
-                    </div>
+                <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3 ">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">
+                        Hướng Đến Lối Sống Xanh
+                    </h6>
+                    <p>
+                        Giảm lãng phí thực phẩm và kết nối cộng đồng để xây dựng một lối sống xanh và bền vững hơn.
+                    </p>
                 </div>
-                <!--Grid row-->
-            </section>
-            <!-- Section: Links -->
-        </div>
-        <!-- Grid container -->
+                <!-- Grid column -->
+
+                <hr class="w-100 clearfix d-md-none"/>
+
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+
+                <hr class="w-100 clearfix d-md-none"/>
+
+                <!-- Grid column -->
+                <hr class="w-100 clearfix d-md-none"/>
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3 ">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Contact US</h6>
+                    <p><i class="fas fa-home mr-3"></i> Cao đẳng Anh Quốc BTEC, FPT Hà Nội</p>
+                    <p><i class="fas fa-envelope mr-3"></i> tdt.tech@gmail.com</p>
+                    <p><i class="fas fa-phone mr-3"></i> 0867047229</p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3 ">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
+
+                    <!-- Facebook -->
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998" href="#!"
+                       role="button"><i class="fab fa-facebook-f"></i></a>
+
+                    <!-- Twitter -->
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee" href="#!"
+                       role="button"><i class="fab fa-twitter"></i></a>
+
+                    <!-- Google -->
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #dd4b39" href="#!"
+                       role="button"><i class="fab fa-google"></i></a>
+
+                    <!-- Instagram -->
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac" href="#!"
+                       role="button"><i class="fab fa-instagram"></i></a>
+
+                    <!-- Linkedin -->
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca" href="#!"
+                       role="button"><i class="fab fa-linkedin-in"></i></a>
+                    <!-- Github -->
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="#!"
+                       role="button"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <!--Grid row-->
+        </section>
+        <!-- Section: Links -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3 bg-light bg-white copyright">
+        © 2024 Copyright:
+        <a class="" href=""> GreenLife & FoodSharing.</a>
+    </div>
+    <!-- End of .container -->
+
+    <!-- Copyright End -->
+
+</footer>
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-md-square btn-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
 
 
-        <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(17, 11, 11, 0.2)">
-            © 2024 Copyright:
-            <a class="text-white" href=""> GreenLife & FoodSharing.</a>
-        </div>
+<!-- JavaScript Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-md-square btn-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
-
-
-        <!-- JavaScript Libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/wow/wow.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/counterup/counterup.min.js"></script>
-        <script src="lib/lightbox/js/lightbox.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
 </body>
 
 </html>
