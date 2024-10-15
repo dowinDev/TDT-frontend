@@ -1,9 +1,9 @@
 document.querySelector('.register .btn-primary').addEventListener('click', async function() {
     // Lấy thông tin từ các input
-    const name = document.getElementById('form3Example1c').value;
-    const email = document.getElementById('form3Example3c').value;
-    const password = document.getElementById('form3Example4c').value;
-    const confirmPassword = document.getElementById('form3Example4cd').value;
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('repeatPassword').value;
 
     // Kiểm tra thông tin
     if (!name || !email || !password || !confirmPassword) {
