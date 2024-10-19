@@ -1,4 +1,4 @@
-document.querySelector('.register .btn-primary').addEventListener('click', async function() {
+document.querySelector('.Shared .btn-primary').addEventListener('click', async function() {
     // Lấy thông tin từ các input
     const name = document.getElementById('form3Example1c').value;
     const email = document.getElementById('form3Example3c').value;
@@ -42,6 +42,6 @@ document.querySelector('.register .btn-primary').addEventListener('click', async
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('An error occurred while trying to register.');
+        alert('An error occurred while trying to Shared.');
     }
 });
