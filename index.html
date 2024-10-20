@@ -131,38 +131,8 @@
 </div>
 <!-- Spinner End -->
 <!-- Navbar start -->
-<div class="container-fluid nav-bar header">
-    <div class="container">
-        <nav class="navbar navbar-light navbar-expand-lg py-4">
-            <a href="index.html" class="navbar-brand">
-                <h1 class="text-primary fw-bold mb-0">FoodSharing<span class="text-dark">Map</span></h1>
-            </a>
-            <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars text-primary"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav mx-auto">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="map.html" class="nav-item nav-link ">Map</a>
-                    <a href="blog.html" class="nav-item nav-link">Blog</a>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                    <a href="event.html" class="nav-item nav-link">Event</a>
-                </div>
-                <div class="search-container">
-                    <input type="text" id="searchInput" placeholder="Search..." class="search-input">
-                    <button id="searchButton" class="search-btn" type="submit">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </div>
-                <a href="./register/login.html"
-                   class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Login/Logout</a>
-            </div>
-        </nav>
-    </div>
-</div>
+<div id="header" class="container-fluid nav-bar header"></div>
 <!-- Navbar End -->
-
 
 <!-- Modal Search Start -->
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -184,18 +154,19 @@
 </div>
 <!-- Modal Search End -->
 
-
 <!-- Hero Start -->
 <div class="container-fluid bg-light py-6 my-6 mt-0">
     <div class="container">
         <div class="row g-5 align-items-center">
             <div class="col-lg-7 col-md-12">
-                <h1 class="display-1 mb-4 animated bounceInDown" style="font-size: 65px;">"Let's <span class="text-primary">share
-                        </span> <p>Reduce waste, help the community!"</p></h1>
-                <a href="./map.html"
+                <h1 class="display-1 mb-4 animated bounceInDown" style="font-size: 65px;">"Let's <span
+                        class="text-primary">share
+                        </span>
+                    <p>Reduce waste, help the community!"</p></h1>
+                <a href="./page/map.html"
                    class="btn btn-primary border-0 rounded-pill py-3 px-4 px-md-5 me-4 animated bounceInLeft">Book
                     Now</a>
-                <a href="./knowMore.html"
+                <a href="./page/contact.html"
                    class="btn btn-primary border-0 rounded-pill py-3 px-4 px-md-5 animated bounceInLeft">Know
                     More</a>
             </div>
@@ -210,117 +181,15 @@
     <div id="productList">
         <!-- Các sản phẩm sẽ được hiển thị tại đây -->
     </div>
+    <nav aria-label="Page navigation">
+        <ul id="pagination" class="pagination"></ul>
+    </nav>
 </div>
-
-<script>
-    // Lấy thông tin sản phẩm từ LocalStorage
-    var productData = localStorage.getItem('product');
-    if (productData) {
-        var product = JSON.parse(productData);
-
-        var productHTML = `
-                <div class="product-card">
-                    <img src="${product.image}" alt="Product Image" class="product-image">
-                    <div class="product-info">
-                        <h3>${product.foodName}</h3>
-                        <p><strong>Quantity:</strong> ${product.quantity}</p>
-                        <p class="price">${product.price == 0 ? 'Free' : product.price + ' VND'}</p>
-                        <button class="button">Order Now</button>
-                    </div>
-                </div>
-            `;
-
-        document.getElementById('productList').innerHTML = productHTML;
-    } else {
-        document.getElementById('productList').innerHTML = '<p>No product to display.</p>';
-    }
-</script>
 <!-- kết thúc danh dách hiện sản phẩm  -->
 <!-- Hero End -->
 <!-- About Satrt -->
 <!-- Copyright Start -->
-<footer class="text-center text-lg-start" , style="color: #6f6c7f;">
-    <!-- Grid container -->
-    <div class="container p-4 pb-0" style="color: #6f6c7f;">
-        <!-- Section: Links -->
-        <section class="">
-            <!--Grid row-->
-            <div class=" row">
-
-                <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3 ">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">
-                        Hướng Đến Lối Sống Xanh
-                    </h6>
-                    <p>
-                        Giảm lãng phí thực phẩm và kết nối cộng đồng để xây dựng một lối sống xanh và bền vững hơn.
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <hr class="w-100 clearfix d-md-none"/>
-
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-
-                <hr class="w-100 clearfix d-md-none"/>
-
-                <!-- Grid column -->
-                <hr class="w-100 clearfix d-md-none"/>
-
-                <!-- Grid column -->
-                <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3 ">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">Contact US</h6>
-                    <p><i class="fas fa-home mr-3"></i> Cao đẳng Anh Quốc BTEC, FPT Hà Nội</p>
-                    <p><i class="fas fa-envelope mr-3"></i> tdt.tech@gmail.com</p>
-                    <p><i class="fas fa-phone mr-3"></i> 0867047229</p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3 ">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
-
-                    <!-- Facebook -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998" href="#!"
-                       role="button"><i class="fab fa-facebook-f"></i></a>
-
-                    <!-- Twitter -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee" href="#!"
-                       role="button"><i class="fab fa-twitter"></i></a>
-
-                    <!-- Google -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #dd4b39" href="#!"
-                       role="button"><i class="fab fa-google"></i></a>
-
-                    <!-- Instagram -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac" href="#!"
-                       role="button"><i class="fab fa-instagram"></i></a>
-
-                    <!-- Linkedin -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca" href="#!"
-                       role="button"><i class="fab fa-linkedin-in"></i></a>
-                    <!-- Github -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="#!"
-                       role="button"><i class="fab fa-github"></i></a>
-                </div>
-            </div>
-            <!--Grid row-->
-        </section>
-        <!-- Section: Links -->
-    </div>
-    <!-- Grid container -->
-
-    <!-- Copyright -->
-    <div class="text-center p-3 bg-light bg-white copyright">
-        © 2024 Copyright:
-        <a class="" href=""> GreenLife & FoodSharing.</a>
-    </div>
-    <!-- End of .container -->
-
-    <!-- Copyright End -->
-
-</footer>
+<footer id="footer" class="text-center text-lg-start" style="color: #6f6c7f;"></footer>
 
 <!-- Back to Top -->
 <a href="#" class="btn btn-md-square btn-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
@@ -338,6 +207,7 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+<script type="module" src="js/home.js"></script>
 </body>
 
 </html>
