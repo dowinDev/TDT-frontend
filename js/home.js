@@ -32,12 +32,42 @@ function loadProducts(page) {
                 // Cập nhật nút phân trang
                 updatePagination(data.data);
                 product();
+                orderNow();
             } else {
                 console.error('Fetched content is not an array.');
             }
         })
         .catch(error => {
             alert('An error occurred while fetching the products. Please try again later.');
+            console.error('Error:', error);
+        });
+}
+
+function loadProductById(id) {
+    const quick = document.getElementById('quick-view');
+    const overlay = document.getElementById('overlay');
+    const token = localStorage.getItem('token');
+
+    fetch(products + `/${id}`, {
+        headers: {'Authorization': `Bearer ${token}`},
+    })
+        .then(response => response.json())
+        .then(data => {
+            const product = data.data;
+
+            if (product) {
+                quick.innerHTML = '';
+
+                quick.style.display = 'block';
+                overlay.style.display = 'block';
+
+                quick.innerHTML = createQuickView(product);
+            } else {
+                console.error('Fetched data is not an product.');
+            }
+        })
+        .catch(error => {
+            alert('An error occurred while fetching the product. Please try again later.');
             console.error('Error:', error);
         });
 }
@@ -74,7 +104,18 @@ function updatePagination(data) {
     `;
 }
 
-function product () {
+function orderNow() {
+    document.querySelectorAll('#btn-orderNow').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định nếu có
+            const productId = this.value; // Lấy productId từ thuộc tính value của nút
+            console.log('Product ID:', productId);
+            loadProductById(productId); // Gọi hàm tạo Quick View với productId
+        });
+    });
+}
+
+function product() {
     const paginationLinks = document.querySelectorAll('.pagination .page-link');
 
 // Gán sự kiện click cho mỗi liên kết
@@ -99,9 +140,9 @@ function product () {
         }
     });
 
-    document.getElementById('previous').addEventListener('click', function (evnet){
+    document.getElementById('previous').addEventListener('click', function (evnet) {
         evnet.preventDefault();
-        if(currentPage > 1){
+        if (currentPage > 1) {
             changePage(currentPage - 1);
         }
     });
@@ -123,10 +164,55 @@ function createProductHTML(product) {
                 <h3>${product.nameProduct}</h3>
                 <p><strong>Quantity:</strong> ${product.quantity}</p>
                 <p class="price">${product.price}</p>
-                <button class="button">Order Now</button>
+                <button id="btn-orderNow" class="button" value="${product.id}">Order Now</button>
             </div>
         </div>
     `;
+}
+
+function createQuickView(product) {
+    return `<div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" data-dismiss="modal" class="class pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                <h3 class="modal-title">${product.nameProduct}</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 product_img">
+                        <img src="${product.image}" class="img-responsive">
+                    </div>
+                    <div class="col-md-6 product_content">
+                        <h4>Product Id: <span>CD${product.id}</span></h4>
+                        <div class="rating">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            (10 reviews)
+                        </div>
+                        <p>${product.description}</p>
+                        <h3 class="cost"></span> ${product.price}đ</h3><p class="price">${product.price}</p>
+                        
+                        <p><strong>Quantity Available:</strong> ${product.quantity}</p>
+                        <!-- Thêm input cho số lượng mua -->
+                        <label for="quantityInput-${product.id}">Enter Quantity to Buy:</label>
+                        <input type="number" id="quantityInput-${product.id}" name="quantity" min="1" max="${product.quantity}" value="1" class="quantity-input">
+                        
+                        <p for="${product.eatery.id}"><strong>Store:</strong> ${product.eatery.nameStore}</p>
+                        <p><strong>Phone:</strong> ${product.contact}</p>
+                        <p><strong>expiration Date:</strong> ${product.expirationDate}</p>
+                        <div class="space-ten"></div>
+                        <div class="btn-ground">
+                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart</button>
+                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-heart"></span> Add To Wishlist</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`;
 }
 
 // Tải sản phẩm lần đầu

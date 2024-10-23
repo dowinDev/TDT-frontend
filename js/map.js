@@ -95,6 +95,7 @@ map.on('click', function (event) {
 
     let form = document.getElementById('info');
     let overlay = document.getElementById('overlay');
+    let formon = document.getElementById('formmon');
     // let popupContent = document.getElementById('popupContent');
     form.style.display = 'block';
     overlay.style.display = 'block';
@@ -104,6 +105,8 @@ map.on('click', function (event) {
     overlay.addEventListener('click', () => {
         overlay.style.display = 'none'; // Ẩn overlay
         form.style.display = 'none'; // Ẩn info
+        formon.style.display = 'none';
+
         newMarker.remove();
         fetchLocations();
     });
@@ -196,6 +199,16 @@ function fetchLocations() {
             alert('Failed to fetch locations.');
             console.error('Error:', error);
         });
+    search.addEventListener('click', function () {
+        const query = document.getElementById('searchInput').value.trim(); // Lấy giá trị và loại bỏ khoảng trắng
+
+        if (query === '') {
+            // Nếu ô nhập liệu trống, không gửi yêu cầu và không thông báo
+            return; // Kết thúc hàm nếu không có giá trị
+        }
+        searchLocation(query); // Gọi hàm tìm kiếm nếu có giá trị
+        document.getElementById('searchInput').value = '';
+    });
 }
 
 // Hàm hiển thị sản phẩm ra HTML
