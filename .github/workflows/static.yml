@@ -26,5 +26,7 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
       - name: check
         run: ls
