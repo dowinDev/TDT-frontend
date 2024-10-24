@@ -4,7 +4,7 @@
 const host = 'localhost';
 const port = 3000;
 const http = `http://${host}:${port}/api`;
-const https = `https://be-food-sharing.btecit.tech`;
+const https = `https://be-food-sharing.btecit.tech/api`;
 
 export const login = `${https}/accounts/login`;
 export const users = `${https}/users`;
