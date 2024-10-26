@@ -110,13 +110,18 @@
 })(jQuery);
 
 let isLoggedIn = false;
+let search;
 
 function loadHeaderAndFooter() {
     fetch('../Shared/header.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById("header").innerHTML = data; // Chèn nội dung vào #header
-            buttonSearch('home');
+
+            search = document.getElementById("searchButton");
+            handlePageLoad();
+            document.dispatchEvent(new Event('mainLoaded'));
+
             // Login button functionality
             document.getElementById("login-btn").addEventListener("click", function () {
                 logout();
@@ -137,6 +142,7 @@ function loadHeaderAndFooter() {
 }
 
 function loadContent(page, url) {
+    buttonSearch(page);
     fetch(url)
         .then(response => response.text())
         .then(data => {
@@ -185,7 +191,7 @@ function updateActiveLink(url) {
 
 // Hàm xử lý khi trang được reload hoặc tải lần đầu
 function handlePageLoad() {
-    loadHeaderAndFooter();
+    //  loadHeaderAndFooter();
     const path = window.location.pathname;  // Lấy đường dẫn hiện tại
     switch (path) {
         case '/page/blog.html':
@@ -221,10 +227,7 @@ function updateLoginButton() {
     }
 }
 
-let search;
-
 function buttonSearch(page) {
-    search = document.getElementById("searchButton");
 
     search.addEventListener("click", function () {
         const input = document.getElementById("searchInput");
@@ -236,26 +239,21 @@ function buttonSearch(page) {
         }
     });
 
-    if (page === 'map') {
-        search.addEventListener('click', function () {
-            const query = document.getElementById('searchInput').value.trim(); // Lấy giá trị và loại bỏ khoảng trắng
-
-            if (query === '') {
-                // Nếu ô nhập liệu trống, không gửi yêu cầu và không thông báo
-                return; // Kết thúc hàm nếu không có giá trị
-            }
-            searchLocation(query); // Gọi hàm tìm kiếm nếu có giá trị
-            document.getElementById('searchInput').value = '';
-
-        });
-    } else {
+    if (page === '/map') {
+        // document.getElementById('searchInput').addEventListener('keydown', function (event) {
+        //     if (event.key === 'Enter') { // Kiểm tra nếu phím nhấn là Enter
+        //         const query = document.getElementById('searchInput').value.trim(); // Lấy giá trị và loại bỏ khoảng trắng
+        //
+        //         if (query === '') {
+        //             // Nếu ô nhập liệu trống, không gửi yêu cầu và không thông báo
+        //             return; // Kết thúc hàm nếu không có giá trị
+        //         }
+        //         searchLocation(query); // Gọi hàm tìm kiếm nếu có giá trị
+        //         document.getElementById('searchInput').value = ''; // Xóa giá trị trong ô tìm kiếm
+        //     }
+        // });
 
     }
-}
-
-function loginHome() {
-    loadHeaderAndFooter();
-    loadContent('/home', '/index.html');
 }
 
 function logout() {
@@ -268,4 +266,6 @@ function logout() {
     }
 }
 
-window.onload = handlePageLoad;
+window.onload = function (){
+    loadHeaderAndFooter();
+};
