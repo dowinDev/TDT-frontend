@@ -35,7 +35,7 @@ submitOtp.addEventListener('click', async (event) => {
 
     try {
         // Gửi yêu cầu xác thực OTP
-        await fetch(verifyOtp, {
+        fetch(verifyOtp, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ submitOtp.addEventListener('click', async (event) => {
             .then(response => {
                 // Kiểm tra phản hồi từ server
                 const data = response.data;
-                if (response.ok) {
+                if (response.status === 200) {
                     // Xử lý nếu xác thực OTP thành công
                     alert('OTP verified successfully! Proceeding to register.');
                     // Gọi API đăng ký
@@ -59,19 +59,25 @@ submitOtp.addEventListener('click', async (event) => {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            name: info.value,
-                            email: info.value,
-                            password: info.value,
+                            userName: info.name,
+                            email: info.email,
+                            password: info.password,
                             authKey: data.authKey
                         }),
                     })
                         .then(response => response.json())
                         .then(response => {
                             const data = response.data;
-                            if (response.ok) {
+                            if (response.status === 200) {
                                 // Đăng ký thành công
                                 alert('Registration successful!');
-                                console.log(data);
+                                const token = data['access_token'];
+                                const refreshToken = data['refresh_token']
+                                console.log('Token:', token);
+
+                                localStorage.setItem('token', token);
+                                localStorage.setItem('refreshToken', refreshToken);
+
                                 window.location.href = '../index.html';
                             } else {
                                 // Đăng ký thất bại
@@ -177,7 +183,7 @@ function checkError(){
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     if (!passwordPattern.test(info.password)) {
         alert('Password must include at least one letter, one number, and one special character.');
-        return f;
+        return false;
     }
 
 // Kiểm tra mật khẩu trùng khớp
