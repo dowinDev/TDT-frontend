@@ -25,10 +25,12 @@ document.querySelector('.btn_submit button').addEventListener('click', async fun
             return response.json();
         })
         .then(data => {
-            const token = data.data['access_token'];  // Lưu token từ response
+            const token = data['access_token'];
+            const refreshToken = data['refresh_token']
             console.log('Token:', token);
-            // Lưu token vào localStorage hoặc sessionStorage để sử dụng sau này
+
             localStorage.setItem('token', token);
+            localStorage.setItem('refreshToken', refreshToken);
 
             // Chuyển hướng đến trang home
             window.location.href = '../index.html';

@@ -1,47 +1,202 @@
-document.querySelector('.Shared .btn-primary').addEventListener('click', async function() {
+import {register, sendOtp, verifyOtp} from "./api.js";
+
+const inputOtp = document.getElementById('otp-input');
+const countDown = document.getElementById('timer');
+const reSendOtp = document.getElementById('reSendOtp');
+const submitOtp = document.getElementById('submitOtp');
+const submitRegister = document.getElementById('submitRegister');
+
+const info = [];
+let min = 1;
+let sec = 0;
+
+submitRegister.addEventListener('click', async function () {
     // Lấy thông tin từ các input
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('repeatPassword').value;
+    info.name = document.getElementById('name').value;
+    info.email = document.getElementById('email').value;
+    info.password = document.getElementById('password').value;
+    info.confirmPassword = document.getElementById('repeatPassword').value;
+    info.check = document.getElementById('checkBox').checked;
 
     // Kiểm tra thông tin
-    if (!name || !email || !password || !confirmPassword) {
-        alert('Please fill in all fields.');
-        return;
-    }
-    if (password !== confirmPassword) {
-        alert('Passwords do not match.');
+    if(!checkError()){
         return;
     }
 
-    // Gửi thông tin đến Node.js
+    // Gửi ma otp toi email
+    otpSend();
+});
+
+// Xử lý sự kiện gửi OTP
+submitOtp.addEventListener('click', async (event) => {
+    event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+
+    const otp = inputOtp.value;
+
     try {
-        const response = await fetch('http://localhost:3000/register', { // Thay đổi URL nếu cần
+        // Gửi yêu cầu xác thực OTP
+        fetch(verifyOtp, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password
+                email: info.email,
+                otp: otp
             }),
-        });
+        })
+            .then(response => response.json())
+            .then(response => {
+                // Kiểm tra phản hồi từ server
+                const data = response.data;
+                if (response.status === 200) {
+                    // Xử lý nếu xác thực OTP thành công
+                    alert('OTP verified successfully! Proceeding to register.');
+                    // Gọi API đăng ký
+                    fetch(register, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            userName: info.name,
+                            email: info.email,
+                            password: info.password,
+                            authKey: data.authKey
+                        }),
+                    })
+                        .then(response => response.json())
+                        .then(response => {
+                            const data = response.data;
+                            if (response.status === 200) {
+                                // Đăng ký thành công
+                                alert('Registration successful!');
+                                const token = data['access_token'];
+                                const refreshToken = data['refresh_token']
+                                console.log('Token:', token);
 
-        // Kiểm tra phản hồi từ server
-        const data = await response.json();
-        if (response.ok) {
-            // Xử lý nếu đăng ký thành công
-            alert('Registration successful!');
-            console.log(data); // In ra thông tin nhận được từ server
-            // Bạn có thể chuyển hướng người dùng hoặc tự động đăng nhập
-        } else {
-            // Xử lý nếu đăng ký thất bại
-            alert(data.message || 'Registration failed. Please try again.');
-        }
+                                localStorage.setItem('token', token);
+                                localStorage.setItem('refreshToken', refreshToken);
+
+                                window.location.href = '../index.html';
+                            } else {
+                                // Đăng ký thất bại
+                                alert(data.message || 'Registration failed. Please try again.');
+                            }
+                        });
+                } else {
+                    // Xử lý nếu xác thực OTP thất bại
+                    alert(data.message || 'OTP verification failed. Please try again.');
+                }
+            });
     } catch (error) {
         console.error('Error:', error);
-        alert('An error occurred while trying to Shared.');
+        alert('An error occurred while trying to verify OTP.');
     }
 });
+
+reSendOtp.addEventListener('click', async function () {
+    otpSend();
+})
+
+function otpSend() {
+    try {
+        fetch(sendOtp, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: info.email,
+            }),
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    alert('OTP has been sent to your email!');
+                } else {
+                    // Xử lý nếu gửi OTP thất bại
+                    alert(response.message || 'Failed to send OTP. Please try again.');
+                }
+            });
+        registerUser();
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while trying to send OTP.');
+    }
+}
+
+function registerUser() {
+    document.getElementById('registrationForm').classList.add('d-none');
+    document.getElementById('otpSection').classList.remove('d-none');
+
+    startTimer(60);
+}
+
+function startTimer(duration) {
+    reSendOtp.classList.add('disabled');
+    let timer = duration, minutes, seconds;
+
+    const interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        countDown.textContent = `Thời gian hiệu lực: ${minutes}:${seconds}`;
+
+        if (--timer < 0) {
+            clearInterval(interval);
+            alert("Mã xác thực đã hết hạn. Vui lòng yêu cầu mã mới.");
+            reSendOtp.classList.remove('disabled');
+        }
+    }, 1000);
+}
+
+function checkError(){
+    // Kiểm tra đầu vào
+    if (!info.name || !info.email || !info.password || !info.confirmPassword) {
+        alert('Please fill in all fields.');
+        return false;
+    }
+
+// Kiểm tra độ dài của tên (ví dụ, tên phải từ 2-30 ký tự)
+    if (info.name.length < 2 || info.name.length > 30) {
+        alert('Name must be between 2 and 30 characters.');
+        return false;
+    }
+
+// Kiểm tra định dạng email (sử dụng regex cho định dạng email cơ bản)
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(info.email)) {
+        alert('Please enter a valid email address.');
+        return false;
+    }
+
+// Kiểm tra độ dài của mật khẩu (ví dụ, tối thiểu 8 ký tự)
+    if (info.password.length < 6) {
+        alert('Password must be at least 8 characters.');
+        return false;
+    }
+
+// Kiểm tra ký tự đặc biệt và số trong mật khẩu
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if (!passwordPattern.test(info.password)) {
+        alert('Password must include at least one letter, one number, and one special character.');
+        return false;
+    }
+
+// Kiểm tra mật khẩu trùng khớp
+    if (info.password !== info.confirmPassword) {
+        alert('Passwords do not match.');
+        return false;
+    }
+
+// Kiểm tra chấp nhận các điều khoản
+    if (!info.check) {
+        alert('You must agree to all statements in the Terms of Service.');
+        return false;
+    }
+
+    return true;
+}
