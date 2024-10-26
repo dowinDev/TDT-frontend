@@ -1,5 +1,11 @@
 import {products} from './api.js';
 
+document.addEventListener('mainLoaded', function () {
+    console.log("Map.js executed after main.js");
+    // Code của map.js sẽ chạy sau khi main.js đã tải xong
+
+    fetchLocations();
+});
 // Đoạn code thiết lập bản đồ
 tt.setProductInfo('FoodSharing', '1.0');
 const map = tt.map({
@@ -11,8 +17,8 @@ const map = tt.map({
 
 // Function tìm kiếm địa điểm
 function searchLocation(query) {
-    var apiKey = 'szTHucPplAtuPjuDVkmfgcuJqgemDk6y';
-    var url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(query)}.json?key=${apiKey}`;
+    const apiKey = 'szTHucPplAtuPjuDVkmfgcuJqgemDk6y';
+    const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(query)}.json?key=${apiKey}`;
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -26,6 +32,7 @@ function searchLocation(query) {
                 map.setZoom(14);
             } else {
                 alert('No location found.');
+                fetch(url)
             }
         })
         .catch(error => {
@@ -199,15 +206,17 @@ function fetchLocations() {
             alert('Failed to fetch locations.');
             console.error('Error:', error);
         });
-    search.addEventListener('click', function () {
-        const query = document.getElementById('searchInput').value.trim(); // Lấy giá trị và loại bỏ khoảng trắng
+    document.getElementById('searchInput').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') { // Kiểm tra nếu phím nhấn là Enter
+            const query = document.getElementById('searchInput').value.trim(); // Lấy giá trị và loại bỏ khoảng trắng
 
-        if (query === '') {
-            // Nếu ô nhập liệu trống, không gửi yêu cầu và không thông báo
-            return; // Kết thúc hàm nếu không có giá trị
+            if (query === '') {
+                // Nếu ô nhập liệu trống, không gửi yêu cầu và không thông báo
+                return; // Kết thúc hàm nếu không có giá trị
+            }
+            searchLocation(query); // Gọi hàm tìm kiếm nếu có giá trị
+            document.getElementById('searchInput').value = ''; // Xóa giá trị trong ô tìm kiếm
         }
-        searchLocation(query); // Gọi hàm tìm kiếm nếu có giá trị
-        document.getElementById('searchInput').value = '';
     });
 }
 
@@ -228,7 +237,6 @@ function displayProducts(data) {
     });
 }
 
-// Gọi hàm fetchLocations khi trang được tải
-fetchLocations();
+
 
 
