@@ -29,6 +29,7 @@
 
     <!-- Template Stylesheet -->
     <link href="../css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/event.css">
     <link rel="icon" href="../img/removed-background.png" type="image/x-icon">
 </head>
 
@@ -77,6 +78,28 @@
                 <li class="breadcrumb-item text-dark" aria-current="page">Events</li>
             </ol>
         </div>
+        <!--event-->
+
+        <div class="container event-section">
+            <header>
+                <h1 class="event-title">Tham gia Sự Kiện bữa cơm 0 đồng  cùng với FoodSharing</h1>
+                <p class="event-subtitle">Cùng nhau chung tay giảm lãng phí thực phẩm và xây dựng cộng đồng xanh bền vững.</p>
+            </header>
+
+            <section class="event-details">
+                <h2>Chi tiết sự kiện</h2>
+                <p><strong>Ngày:</strong> 03 tháng 11, 2024</p>
+                <p><strong>Thời gian:</strong> 19:00 - 21:00</p>
+                <p><strong>Địa điểm:</strong> Xung quanh địa bàn Hà Nội </p>
+                <p><strong></strong>"Những bữa cơm sẽ được gửi đến những người gặp khó khăn<br> và thực sự cần những bữa ăn này"   </p>
+                <p class="event-description">Hãy cùng tham gia để lan tỏa yêu thương đến  những người gặp khó khăn nhé </p>
+            </section>
+
+            <button class="register-button" onclick="window.location.href='https://www.facebook.com/share/p/PZvPPYJe15GFiv77/'">Đăng ký ngay</button>
+            <p id="confirmation-message" class="confirmation-message hidden">Cảm ơn bạn đã đăng ký tham gia sự kiện!</p>
+        </div>
+
+        <!--end event -->
     </div>
     <!-- Hero End -->
 
@@ -99,6 +122,13 @@
 
     <!-- Template Javascript -->
     <script src="../js/main.js"></script>
+    <script>
+        function register() {
+            const message = document.getElementById("confirmation-message");
+            message.classList.remove("hidden");
+            message.innerHTML = "Cảm ơn bạn đã đăng ký tham gia sự kiện!";
+        }
+    </script>
 </body>
 
 </html>
