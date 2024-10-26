@@ -1,0 +1,62 @@
+.event-section {
+    background-color: #f0f5f4;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #2c3e50;
+}
+
+.event-title {
+    font-family: 'Playball', cursive;
+    font-size: 2.5rem;
+    color: #27ae60;
+}
+
+.event-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #34495e;
+}
+
+.event-details h2 {
+    font-size: 1.8rem;
+    color: #2980b9;
+    margin-bottom: 15px;
+}
+
+.event-details p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.event-description {
+    font-style: italic;
+    color: #7f8c8d;
+}
+
+.register-button {
+    background-color: #27ae60;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.register-button:hover {
+    background-color: #2ecc71;
+}
+
+.confirmation-message {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #27ae60;
+}
+
+.hidden {
+    display: none;
+}
