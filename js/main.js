@@ -1,3 +1,5 @@
+import {refresh, logOut, checkToken} from './api.js';
+
 (function ($) {
     "use strict";
 
@@ -139,10 +141,11 @@ function loadHeaderAndFooter() {
             document.getElementById("footer").innerHTML = data; // Chèn nội dung vào #footer
         })
         .catch(error => console.error('Error loading footer:', error));
+    fetchData();
 }
 
 function loadContent(page, url) {
-    buttonSearch(page);
+    buttonSearch();
     fetch(url)
         .then(response => response.text())
         .then(data => {
@@ -227,7 +230,7 @@ function updateLoginButton() {
     }
 }
 
-function buttonSearch(page) {
+function buttonSearch() {
 
     search.addEventListener("click", function () {
         const input = document.getElementById("searchInput");
@@ -238,22 +241,6 @@ function buttonSearch(page) {
             input.focus(); // focus vào input khi thanh được mở
         }
     });
-
-    if (page === '/map') {
-        // document.getElementById('searchInput').addEventListener('keydown', function (event) {
-        //     if (event.key === 'Enter') { // Kiểm tra nếu phím nhấn là Enter
-        //         const query = document.getElementById('searchInput').value.trim(); // Lấy giá trị và loại bỏ khoảng trắng
-        //
-        //         if (query === '') {
-        //             // Nếu ô nhập liệu trống, không gửi yêu cầu và không thông báo
-        //             return; // Kết thúc hàm nếu không có giá trị
-        //         }
-        //         searchLocation(query); // Gọi hàm tìm kiếm nếu có giá trị
-        //         document.getElementById('searchInput').value = ''; // Xóa giá trị trong ô tìm kiếm
-        //     }
-        // });
-
-    }
 }
 
 function logout() {
@@ -265,6 +252,67 @@ function logout() {
         window.location.href = "login.html";
     }
 }
+// Hàm fetch API với cơ chế tự động làm mới access token
+async function fetchWithRefreshToken(url, options = {}) {
+    try {
+        const token = localStorage.getItem('token');
+        options.headers = {
+            headers: {'Authorization': `Bearer ${token}`},
+        }
+        // Thực hiện request API với access token hiện tại
+        let response = await fetch(url, options);
+
+        // Kiểm tra nếu token hết hạn (401 Unauthorized)
+        if (response.status === 401) {
+            // Thực hiện làm mới access token bằng refresh token
+            const refreshToken = localStorage.getItem('refreshToken'); // Hoặc từ cookie nếu lưu ở đó
+            await fetch(refresh, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({refreshToken: refreshToken }),
+            })
+                .then(response => response.json())
+                .then(response => {
+                    // Kiểm tra nếu refresh token hợp lệ
+                    if (response.status === 200) {
+                        const newAccessToken = response.data;
+
+                        // Cập nhật access token mới vào localStorage
+                        localStorage.setItem('token', newAccessToken);
+                    } else {
+                        // Xử lý nếu refresh token hết hạn hoặc không hợp lệ
+                        console.error('Refresh token expired or invalid');
+                        window.location.href = '../page/login.html';
+                    }
+                });
+        }
+        return response;
+    } catch (error) {
+        console.error('Error in fetchWithRefreshToken:', error);
+        throw error;
+    }
+}
+
+// Sử dụng fetchWithRefreshToken
+function fetchData() {
+    try {
+        const response = fetchWithRefreshToken(checkToken, {
+            method: 'POST',
+        });
+
+        if (response.ok) {
+            const data = response.json();
+            console.log('Data:', data);
+        } else {
+            console.error('Failed to fetch data:', response.status);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
 
 window.onload = function (){
     loadHeaderAndFooter();

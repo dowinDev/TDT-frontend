@@ -44,8 +44,6 @@ function loadProducts(page) {
 }
 
 function loadProductById(id) {
-    const quick = document.getElementById('quick-view');
-    const overlay = document.getElementById('overlay');
     const token = localStorage.getItem('token');
 
     fetch(products + `/${id}`, {
@@ -56,12 +54,7 @@ function loadProductById(id) {
             const product = data.data;
 
             if (product) {
-                quick.innerHTML = '';
-
-                quick.style.display = 'block';
-                overlay.style.display = 'block';
-
-                quick.innerHTML = createQuickView(product);
+                openProductDetail(product);
             } else {
                 console.error('Fetched data is not an product.');
             }
@@ -148,6 +141,14 @@ function product() {
     });
 }
 
+function openProductDetail(product) {
+    // Hiển thị thông tin sản phẩm vào modal
+    document.getElementById('productDetail').innerHTML = createProductDetail(product);
+    // Hiển thị modal
+    const modal = new bootstrap.Modal(document.getElementById("productDetailModal"));
+    modal.show();
+}
+
 // Hàm thay đổi trang
 function changePage(page) {
     if (page < 1 || page > totalPages) return; // Kiểm tra nếu trang ngoài phạm vi
@@ -163,56 +164,98 @@ function createProductHTML(product) {
             <div class="product-info">
                 <h3>${product.nameProduct}</h3>
                 <p><strong>Quantity:</strong> ${product.quantity}</p>
-                <p class="price">${product.price}</p>
+                <p class="price">${product.price === "Free" ? "Free" :
+                    Number(product.price).toLocaleString("de-DE") + " đ"}</p>
                 <button id="btn-orderNow" class="button" value="${product.id}">Order Now</button>
             </div>
         </div>
     `;
 }
 
-function createQuickView(product) {
-    return `<div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <a href="#" data-dismiss="modal" class="class pull-right"><span class="glyphicon glyphicon-remove"></span></a>
-                <h3 class="modal-title">${product.nameProduct}</h3>
+function createProductDetail(product) {
+    return `<div class="modal-header">
+                <h5 class="modal-title fw-bold" id="productDetailLabel" value="${product.id}">Product detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6 product_img">
-                        <img src="${product.image}" class="img-responsive">
-                    </div>
-                    <div class="col-md-6 product_content">
-                        <h4>Product Id: <span>CD${product.id}</span></h4>
-                        <div class="rating">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            (10 reviews)
+                <div class="container py-5">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <img src="${product.image}" class="img-fluid" alt="Product Image">
                         </div>
-                        <p>${product.description}</p>
-                        <h3 class="cost"></span> ${product.price}đ</h3><p class="price">${product.price}</p>
-                        
-                        <p><strong>Quantity Available:</strong> ${product.quantity}</p>
-                        <!-- Thêm input cho số lượng mua -->
-                        <label for="quantityInput-${product.id}">Enter Quantity to Buy:</label>
-                        <input type="number" id="quantityInput-${product.id}" name="quantity" min="1" max="${product.quantity}" value="1" class="quantity-input">
-                        
-                        <p for="${product.eatery.id}"><strong>Store:</strong> ${product.eatery.nameStore}</p>
-                        <p><strong>Phone:</strong> ${product.contact}</p>
-                        <p><strong>expiration Date:</strong> ${product.expirationDate}</p>
-                        <div class="space-ten"></div>
-                        <div class="btn-ground">
-                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart</button>
-                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-heart"></span> Add To Wishlist</button>
+                        <div class="col-lg-6">
+                            <h2 class="fw-bold">${product.nameProduct}</h2>
+                            <p class="text-muted">Quantity: ${product.quantity}</p>
+                            <h3 class="my-4">${
+                                product.price === "Free" ? "Free" : 
+                                    Number(product.price).toLocaleString("de-DE") + " đ"
+                            }</h3>
+                            <p class="mb-4">HSD: ${product.expirationDate}</p>
+                            <div class="d-flex gap-3 mb-4">
+                                <input type="number" class="form-control" value="1" style="max-width: 80px;">
+                                <button class="btn btn-primary" type="button">Add to Cart</button>
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-secondary btn-sm" type="button">Add to Wishlist</button>
+                                <button class="btn btn-outline-secondary btn-sm" type="button">Compare</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="nav nav-tabs mt-5" id="productTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description"
+                                    type="button" role="tab" aria-controls="description" aria-selected="true">Description
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs" type="button"
+                                    role="tab" aria-controls="specs" aria-selected="false">Specifications
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button"
+                                    role="tab" aria-controls="reviews" aria-selected="false">Reviews
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="productTabContent">
+                        <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                            <p class="mt-3">${product.description} </p>
+                        </div>
+                        <div class="tab-pane fade" id="specs" role="tabpanel" aria-labelledby="specs-tab">
+                            <table class="table mt-3">
+                                <tr>
+                                    <th><span value="${product.eatery.id}">Store</span></th>
+                                    <td>${product.eatery.nameStore}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone</th>
+                                    <td>${product.contact}</td>
+                                </tr>
+                                <tr>
+                                    <th>Weight</th>
+                                    <td>1kg</td>
+                                </tr>
+                                <tr>
+                                    <th>Dimensions</th>
+                                    <td>10 x 20 x 5 cm</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                            <div class="mt-3">
+                                <h5>John Doe</h5>
+                                <p>Excellent product! Highly recommended.</p>
+                                <h5>Jane Smith</h5>
+                                <p>High quality and great customer service.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>`;
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>`;
 }
 
 // Tải sản phẩm lần đầu

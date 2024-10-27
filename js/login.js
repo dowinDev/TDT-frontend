@@ -25,8 +25,9 @@ document.querySelector('.btn_submit button').addEventListener('click', async fun
             return response.json();
         })
         .then(data => {
-            const token = data['access_token'];
-            const refreshToken = data['refresh_token']
+            const tokens = data.data;
+            const token = tokens['token'];
+            const refreshToken = tokens['refreshToken']
             console.log('Token:', token);
 
             localStorage.setItem('token', token);
