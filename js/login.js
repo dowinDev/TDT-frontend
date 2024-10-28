@@ -1,6 +1,6 @@
 import {login} from './api.js';
 
-document.querySelector('.btn_submit button').addEventListener('click', async function() {
+document.querySelector('.btn_submit button').addEventListener('click', async function () {
     // Lấy thông tin email và password
     const userName = document.getElementById('userName').value;
     const password = document.getElementById('password').value;
@@ -11,16 +11,16 @@ document.querySelector('.btn_submit button').addEventListener('click', async fun
         return;
     }
 
-    fetch(login,{
+    fetch(login, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ userName: userName, password: password })
+        body: JSON.stringify({userName: userName, password: password})
     })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Login failed');
+            if (response.status === 404) {
+                  alert(`Login failed: ${response.message}`);
             }
             return response.json();
         })
