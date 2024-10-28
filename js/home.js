@@ -1,8 +1,7 @@
-// Lấy thông tin sản phẩm từ LocalStorage
-import {products} from "./api.js";
+import {products, limitProduct} from "./api.js";
 
 let currentPage = 1;
-const limit = 5;
+const limit = limitProduct;
 
 let totalPages = 1;
 

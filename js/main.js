@@ -1,144 +1,104 @@
-import {refresh, logOut, checkToken} from './api.js';
+// Imports và khởi tạo biến
+import {checkToken, logOut, refresh} from './api.js';
 
+const localToken = localStorage.getItem('token');
+const localRefreshToken = localStorage.getItem('refreshToken');
+let isLoggedIn = false;
+let search;
+
+// Utility Functions
+function spinner() {
+    setTimeout(() => {
+        if ($('#spinner').length > 0) {
+            $('#spinner').removeClass('show');
+        }
+    }, 1);
+}
+
+function updateActiveLink(url) {
+    const links = document.querySelectorAll('nav a');
+    links.forEach(link => link.classList.remove('active'));
+    const linkIdMap = {
+        '/blog': 'blog-link',
+        '/contact': 'contact-link',
+        '/map': 'map-link',
+        '/event': 'event-link'
+    };
+    const activeLink = linkIdMap[url] || 'home-link';
+    document.getElementById(activeLink).classList.add('active');
+}
+
+function buttonSearch() {
+    search.addEventListener("click", () => {
+        const input = document.getElementById("searchInput");
+        input.classList.toggle("show");
+        input.focus();
+    });
+}
+
+// Spinner, animation, carousel, and counter init
 (function ($) {
     "use strict";
-
-    // Spinner
-    var spinner = function () {
-        setTimeout(function () {
-            if ($('#spinner').length > 0) {
-                $('#spinner').removeClass('show');
-            }
-        }, 1);
-    };
-    spinner(0);
-
-
-    // Initiate the wowjs
+    spinner();
     new WOW().init();
-
-
     // Back to top button
-    $(window).scroll(function () {
+    $(window).scroll(() => {
         if ($(this).scrollTop() > 300) {
             $('.back-to-top').fadeIn('slow');
         } else {
             $('.back-to-top').fadeOut('slow');
         }
     });
-    $('.back-to-top').click(function () {
+    $('.back-to-top').click(() => {
         $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
         return false;
     });
-
-
-    // Modal Video
-    $(document).ready(function () {
-        var $videoSrc;
+    // Modal Video handling
+    $(document).ready(() => {
+        let $videoSrc;
         $('.btn-play').click(function () {
             $videoSrc = $(this).data("src");
         });
-        console.log($videoSrc);
-
-        $('#videoModal').on('shown.bs.modal', function (e) {
-            $("#video").attr('src', $videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
-        })
-
-        $('#videoModal').on('hide.bs.modal', function (e) {
+        $('#videoModal').on('shown.bs.modal', () => {
+            $("#video").attr('src', `${$videoSrc}?autoplay=1&amp;modestbranding=1&amp;showinfo=0`);
+        });
+        $('#videoModal').on('hide.bs.modal', () => {
             $("#video").attr('src', $videoSrc);
-        })
+        });
     });
-
-
-    // Facts counter
-    $('[data-toggle="counter-up"]').counterUp({
-        delay: 10,
-        time: 2000
+    // Counter up, carousel initializations
+    $('[data-toggle="counter-up"]').counterUp({delay: 10, time: 2000});
+    $(".testimonial-carousel-1, .testimonial-carousel-2").each(function () {
+        $(this).owlCarousel({
+            loop: true,
+            dots: false,
+            autoplay: true,
+            slideTransition: 'linear',
+            autoplayTimeout: 0,
+            autoplaySpeed: 10000,
+            autoplayHoverPause: false,
+            margin: 25,
+            rtl: $(this).hasClass('testimonial-carousel-2'),
+            responsive: {0: {items: 1}, 575: {items: 1}, 767: {items: 2}, 991: {items: 3}}
+        });
     });
-
-
-    // Testimonial carousel
-    $(".testimonial-carousel-1").owlCarousel({
-        loop: true,
-        dots: false,
-        margin: 25,
-        autoplay: true,
-        slideTransition: 'linear',
-        autoplayTimeout: 0,
-        autoplaySpeed: 10000,
-        autoplayHoverPause: false,
-        responsive: {
-            0: {
-                items: 1
-            },
-            575: {
-                items: 1
-            },
-            767: {
-                items: 2
-            },
-            991: {
-                items: 3
-            }
-        }
-    });
-
-    $(".testimonial-carousel-2").owlCarousel({
-        loop: true,
-        dots: false,
-        rtl: true,
-        margin: 25,
-        autoplay: true,
-        slideTransition: 'linear',
-        autoplayTimeout: 0,
-        autoplaySpeed: 10000,
-        autoplayHoverPause: false,
-        responsive: {
-            0: {
-                items: 1
-            },
-            575: {
-                items: 1
-            },
-            767: {
-                items: 2
-            },
-            991: {
-                items: 3
-            }
-        }
-    });
-
 })(jQuery);
 
-let isLoggedIn = false;
-let search;
-
+// Header and Footer loading
 function loadHeaderAndFooter() {
-    fetch('../Shared/header.html')
-        .then(response => response.text())
+    fetch('../Shared/header.html').then(response => response.text())
         .then(data => {
-            document.getElementById("header").innerHTML = data; // Chèn nội dung vào #header
-
+            document.getElementById("header").innerHTML = data;
             search = document.getElementById("searchButton");
             handlePageLoad();
             document.dispatchEvent(new Event('mainLoaded'));
-
-            // Login button functionality
-            document.getElementById("login-btn").addEventListener("click", function () {
-                logout();
-            });
-            // Kiểm tra trạng thái đăng nhập và cập nhật nút khi tải trang
-            const token = localStorage.getItem("token");
-            isLoggedIn = token !== null;
+            document.getElementById("login-btn").addEventListener("click", logout);
+            isLoggedIn = localToken !== null;
             updateLoginButton();
-        })
-        .catch(error => console.error('Error loading header:', error));
-
-    fetch('../Shared/footer.html')
-        .then(response => response.text())
+        }).catch(error => console.error('Error loading header:', error));
+    fetch('../Shared/footer.html').then(response => response.text())
         .then(data => {
-            document.getElementById("footer").innerHTML = data; // Chèn nội dung vào #footer
+            document.getElementById("footer").innerHTML = data;
         })
         .catch(error => console.error('Error loading footer:', error));
     fetchData();
@@ -146,143 +106,75 @@ function loadHeaderAndFooter() {
 
 function loadContent(page, url) {
     buttonSearch();
-    fetch(url)
-        .then(response => response.text())
+    fetch(url).then(response => response.text())
         .then(data => {
             if (window.location.pathname !== url) {
-                window.location.href = url; // Chèn nội dung vào #content
+                window.location.href = url;
             } else {
-                updateActiveLink(page); // Cập nhật class active cho liên kết
-                console.log('success');
+                updateActiveLink(page);
             }
-        })
-        .catch(error => console.error('Error loading content:', error));
+        }).catch(error => console.error('Error loading content:', error));
 }
 
-window.onpopstate = function (event) {
+window.onpopstate = event => {
     if (event.state && event.state.path) {
-        loadHeaderAndFooter(); // Tải lại header và footer
-        loadContent(event.state.path, event.state.path); // Tải lại nội dung khi nhấn Back/Forward
-        updateActiveLink(event.state.path); // Cập nhật class active cho liên kết
+        loadHeaderAndFooter();
+        loadContent(event.state.path, event.state.path);
+        updateActiveLink(event.state.path);
     }
 };
 
-// Hàm cập nhật class active cho liên kết
-function updateActiveLink(url) {
-    const links = document.querySelectorAll('nav a');
-    links.forEach(link => link.classList.remove('active')); // Xóa class active khỏi tất cả liên kết
-
-    // Thêm class active cho liên kết tương ứng với URL hiện tại
-    switch (url) {
-        case '/blog':
-            document.getElementById('blog-link').classList.add('active');
-            break;
-        case '/contact':
-            document.getElementById('contact-link').classList.add('active');
-            break;
-        case '/map':
-            document.getElementById('map-link').classList.add('active');
-            break;
-        case '/event':
-            document.getElementById('event-link').classList.add('active');
-            break;
-        default:
-            document.getElementById('home-link').classList.add('active');
-            break;
-    }
-}
-
-// Hàm xử lý khi trang được reload hoặc tải lần đầu
+// Page load handler
 function handlePageLoad() {
-    //  loadHeaderAndFooter();
-    const path = window.location.pathname;  // Lấy đường dẫn hiện tại
-    switch (path) {
-        case '/page/blog.html':
-            loadContent('/blog', '/page/blog.html');
-            break;
-        case '/page/contact.html':
-            loadContent('/contact', '/page/contact.html');
-            break;
-        case '/page/map.html':
-            loadContent('/map', '/page/map.html');
-            break;
-        case '/page/event.html':
-            loadContent('/event', '/page/event.html');
-            break;
-        case'/page/blog2.html':
-            loadContent('/blog', '/page/blog2.html');
-            break;
-        case'/index.html#':
-            break;
-        default:
-            loadContent('/home', '/index.html');
-            break;
-    }
+    const path = window.location.pathname;
+    const pageMap = {
+        '/page/blog.html': '/blog',
+        '/page/contact.html': '/contact',
+        '/page/map.html': '/map',
+        '/page/event.html': '/event',
+        '/page/blog2.html': '/blog',
+    };
+    loadContent(pageMap[path] || '/home', path);
 }
 
-// Update login button icon
+// Login and Logout handling
 function updateLoginButton() {
     const loginBtn = document.getElementById("login-btn");
-    if (isLoggedIn) {
-        loginBtn.innerHTML = "&#128100;";
-    } else {
-        loginBtn.innerHTML = "Login/Register";
-    }
+    loginBtn.innerHTML = isLoggedIn ? "&#128100;" : "Login/Register";
 }
 
-function buttonSearch() {
-
-    search.addEventListener("click", function () {
-        const input = document.getElementById("searchInput");
-        if (input.classList.contains("show")) {
-            input.classList.remove("show");
-        } else {
-            input.classList.add("show");
-            input.focus(); // focus vào input khi thanh được mở
-        }
-    });
-}
-
-function logout() {
+async function logout() {
     if (isLoggedIn) {
         isLoggedIn = false;
-        localStorage.removeItem("token");
-        document.getElementById("login-btn").innerHTML = "Login";
+        await fetch(logOut, {
+            method: 'POST',
+            headers: {'Authorization': `Bearer ${localToken}`, 'Content-Type': 'application/json'}
+        })
+            .then(() => {
+                localStorage.removeItem("token");
+                document.getElementById("login-btn").innerHTML = "Login";
+            });
     } else {
         window.location.href = "login.html";
     }
 }
-// Hàm fetch API với cơ chế tự động làm mới access token
+
 async function fetchWithRefreshToken(url, options = {}) {
     try {
-        const token = localStorage.getItem('token');
-        options.headers = {
-            headers: {'Authorization': `Bearer ${token}`},
-        }
-        // Thực hiện request API với access token hiện tại
+        options.headers = {'Authorization': `Bearer ${localToken}`};
         let response = await fetch(url, options);
-
-        // Kiểm tra nếu token hết hạn (401 Unauthorized)
-        if (response.status === 401) {
-            // Thực hiện làm mới access token bằng refresh token
-            const refreshToken = localStorage.getItem('refreshToken'); // Hoặc từ cookie nếu lưu ở đó
+        if (response.status === 403) {
             await fetch(refresh, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({refreshToken: refreshToken }),
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({refreshToken: localRefreshToken})
             })
-                .then(response => response.json())
-                .then(response => {
-                    // Kiểm tra nếu refresh token hợp lệ
-                    if (response.status === 200) {
-                        const newAccessToken = response.data;
-
-                        // Cập nhật access token mới vào localStorage
+                .then(res => res.json())
+                .then(res => {
+                    if (res.status === 200) {
+                        const newAccessToken = res.data;
                         localStorage.setItem('token', newAccessToken);
                     } else {
-                        // Xử lý nếu refresh token hết hạn hoặc không hợp lệ
                         console.error('Refresh token expired or invalid');
                         window.location.href = '../page/login.html';
                     }
@@ -295,25 +187,20 @@ async function fetchWithRefreshToken(url, options = {}) {
     }
 }
 
-// Sử dụng fetchWithRefreshToken
+// Fetch data using fetchWithRefreshToken
 function fetchData() {
     try {
-        const response = fetchWithRefreshToken(checkToken, {
-            method: 'POST',
+        fetchWithRefreshToken(checkToken, {method: 'POST'}).then(response => {
+            if (response.ok) {
+                response.json().then(data => console.log('Data:', data));
+            } else {
+                console.error('Failed to fetch data:', response.status);
+            }
         });
-
-        if (response.ok) {
-            const data = response.json();
-            console.log('Data:', data);
-        } else {
-            console.error('Failed to fetch data:', response.status);
-        }
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
 
-
-window.onload = function (){
-    loadHeaderAndFooter();
-};
+// On window load
+window.onload = loadHeaderAndFooter;
