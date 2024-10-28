@@ -5,8 +5,20 @@ const limit = limitProduct;
 
 let totalPages = 1;
 
+// Hàm để lấy query parameters từ URL
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+// Lấy ID sản phẩm từ URL
+const productId = getQueryParam('id');
+
 // Hàm tải sản phẩm
 function loadProducts(page) {
+    if(productId != null){
+        loadProductById(productId);
+    }
     const productsUrl = products + `?page=${page}&limit=${limit}`;
     fetch(productsUrl)
         .then(response => response.json())
@@ -40,6 +52,17 @@ function loadProducts(page) {
             alert('An error occurred while fetching the products. Please try again later.');
             console.error('Error:', error);
         });
+}
+
+function orderNow() {
+    document.querySelectorAll('#btn-orderNow').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định nếu có
+            const productId = this.value; // Lấy productId từ thuộc tính value của nút
+            console.log('Product ID:', productId);
+            loadProductById(productId);
+        });
+    });
 }
 
 function loadProductById(id) {
@@ -94,17 +117,6 @@ function updatePagination(data) {
             <a class="page-link" href="#" style="cursor: pointer" id="next">Next</a>
         </li>
     `;
-}
-
-function orderNow() {
-    document.querySelectorAll('#btn-orderNow').forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.preventDefault(); // Ngăn chặn hành vi mặc định nếu có
-            const productId = this.value; // Lấy productId từ thuộc tính value của nút
-            console.log('Product ID:', productId);
-            loadProductById(productId); // Gọi hàm tạo Quick View với productId
-        });
-    });
 }
 
 function product() {

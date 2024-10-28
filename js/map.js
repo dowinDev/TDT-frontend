@@ -230,7 +230,7 @@ function displayProducts(data) {
         const popupContent = `
             Thực phẩm: ${product.nameProduct}<br>
             Giá: ${product.price}<br>
-            <a href="../index.html"><img class="popup-image" src="${product.image}" alt="${product.nameProduct}"></a>
+            <a href="../index.html?id=${product.id}"><img class="popup-image" src="${product.image}" alt="${product.nameProduct}"></a>
         `;
         var popup = new tt.Popup({offset: 35}).setHTML(popupContent);
         marker.setPopup(popup).togglePopup();
