@@ -71,8 +71,8 @@ submitOtp.addEventListener('click', async (event) => {
                             if (response.status === 200) {
                                 // Đăng ký thành công
                                 alert('Registration successful!');
-                                const token = data['access_token'];
-                                const refreshToken = data['refresh_token']
+                                const token = data['token'];
+                                const refreshToken = data['refreshToken']
                                 console.log('Token:', token);
 
                                 localStorage.setItem('token', token);
