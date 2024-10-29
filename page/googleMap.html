@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TomTom Map Example</title>
+    <!-- Import CSS and JavaScript for TomTom Maps -->
+    <link rel="stylesheet" href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.20.0/maps/maps.css">
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.20.0/maps/maps-web.min.js"></script>
+    <style>
+        /* Thiết lập kích thước cho bản đồ */
+        #map {
+            width: 100%;
+            height: 600px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h2 style="text-align: center;">TomTom Map</h2>
+<div id="map"></div>
+
+<script>
+    function initializeMap() {
+        tt.setProductInfo('MyMapApp', '1.0');  // Đặt tên ứng dụng và phiên bản
+
+        const markerPosition = [106.660172, 10.762622]; // Tọa độ marker (ví dụ TP HCM)
+        const zoomThresholdDistance = 500; // Khoảng cách tối đa (đơn vị: mét) để cho phép cuộn zoom
+
+        // Khởi tạo bản đồ với API Key
+        const map = tt.map({
+            key: 'szTHucPplAtuPjuDVkmfgcuJqgemDk6y',  // Thay bằng API Key của bạn
+            container: 'map',
+            center: markerPosition, // Tọa độ trung tâm (Ví dụ: TP Hồ Chí Minh)
+            zoom: 12,
+            dragPan: false,        // Tắt kéo bản đồ bằng chuột
+            scrollZoom: false,     // Tắt cuộn zoom bằng chuột
+            doubleClickZoom: false // Tắt zoom bằng double-click
+        });
+
+        // // Thêm điều khiển zoom vào bản đồ
+        // map.addControl(new tt.NavigationControl());
+
+        map.addControl(new tt.NavigationControl());
+        new tt.Marker().setLngLat(markerPosition).addTo(map);
+
+        // Kích hoạt scrollZoom khi con trỏ gần marker
+        map.on('mousemove', (event) => {
+            const distanceToMarker = tt.LngLat.convert(markerPosition).distanceTo(event.lngLat);
+            if (distanceToMarker <= zoomThresholdDistance) {
+                map.scrollZoom.enable();  // Cho phép cuộn zoom gần marker
+            } else {
+                map.scrollZoom.disable(); // Tắt cuộn zoom khi ra khỏi phạm vi
+            }
+        });
+    }
+
+    // Gọi hàm khởi tạo khi trang tải xong
+    window.onload = initializeMap;
+</script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 // Imports và khởi tạo biến
-import {checkToken, logOut, refresh} from './api.js';
+import {checkToken, logOut, refresh} from './connectionApi.js';
 
 const localToken = localStorage.getItem('token');
 const localRefreshToken = localStorage.getItem('refreshToken');
@@ -109,7 +109,7 @@ function loadContent(page, url) {
     fetch(url).then(response => response.text())
         .then(data => {
             if (window.location.pathname !== url) {
-                window.location.href = url;
+                history.pushState({ path: page }, '', page);
             } else {
                 updateActiveLink(page);
             }
@@ -152,7 +152,7 @@ async function logout() {
         })
             .then(() => {
                 localStorage.removeItem("token");
-                document.getElementById("login-btn").innerHTML = "Login";
+                document.getElementById("login-btn").innerHTML = "Login/Register";
             });
     } else {
         window.location.href = "login.html";

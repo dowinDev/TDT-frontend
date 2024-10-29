@@ -1,4 +1,4 @@
-import {register, sendOtp, verifyOtp} from "./api.js";
+import {register, sendOtp, verifyOtp} from "./connectionApi.js";
 
 const inputOtp = document.getElementById('otp-input');
 const countDown = document.getElementById('timer');

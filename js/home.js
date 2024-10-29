@@ -1,4 +1,4 @@
-import {products, limitProduct} from "./api.js";
+import {products, limitProduct} from "./connectionApi.js";
 
 let currentPage = 1;
 const limit = limitProduct;
@@ -11,12 +11,23 @@ function getQueryParam(param) {
     return urlParams.get(param);
 }
 
+function removeQueryParam(param) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete(param);
+    window.history.replaceState({}, document.title, url);
+}
+function close() {
+    document.getElementById("close-btn").addEventListener("click", function () {
+        removeQueryParam('id');
+    });
+}
+
 // Lấy ID sản phẩm từ URL
 const productId = getQueryParam('id');
 
 // Hàm tải sản phẩm
 function loadProducts(page) {
-    if(productId != null){
+    if (productId != null) {
         loadProductById(productId);
     }
     const productsUrl = products + `?page=${page}&limit=${limit}`;
@@ -155,6 +166,9 @@ function product() {
 function openProductDetail(product) {
     // Hiển thị thông tin sản phẩm vào modal
     document.getElementById('productDetail').innerHTML = createProductDetail(product);
+    initializeMap(product.eatery.location);
+    close();
+
     // Hiển thị modal
     const modal = new bootstrap.Modal(document.getElementById("productDetailModal"));
     modal.show();
@@ -198,9 +212,9 @@ function createProductDetail(product) {
                             <h2 class="fw-bold">${product.nameProduct}</h2>
                             <p class="text-muted">Quantity: ${product.quantity}</p>
                             <h3 class="my-4">${
-                                product.price === "Free" ? "Free" : 
-                                    Number(product.price).toLocaleString("de-DE") + " đ"
-                            }</h3>
+        product.price === "Free" ? "Free" :
+            Number(product.price).toLocaleString("de-DE") + " đ"
+    }</h3>
                             <p class="mb-4">HSD: ${product.expirationDate}</p>
                             <div class="d-flex gap-3 mb-4">
                                 <input type="number" class="form-control" value="1" style="max-width: 80px;">
@@ -228,8 +242,14 @@ function createProductDetail(product) {
                                     role="tab" aria-controls="reviews" aria-selected="false">Reviews
                             </button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button data-mdb-tab-init class="nav-link" id="map-tab" 
+                                    data-bs-toggle="tab" data-bs-target="#maps" type="button"
+                                    role="tab" aria-controls="map" aria-selected="false">Map
+                            </button>
+                        </li>
                     </ul>
-                    <div class="tab-content" id="productTabContent">
+                    <div class="tab-content" id="productTabContent" style="overflow: hidden;">
                         <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                             <p class="mt-3">${product.description} </p>
                         </div>
@@ -255,18 +275,65 @@ function createProductDetail(product) {
                         </div>
                         <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                             <div class="mt-3">
-                                <h5>John Doe</h5>
-                                <p>Excellent product! Highly recommended.</p>
-                                <h5>Jane Smith</h5>
-                                <p>High quality and great customer service.</p>
+                                <a href="https://www.google.com/maps?q=${product.eatery.location}" style="cursor: pointer">
+                                    <div id="map" class="table mt-3" style="width: 100%; height: 300px; border-radius: 8px; overflow: hidden;"></div>
+                                </a>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="maps" role="tabpanel" aria-labelledby="map-tab">
+                            <div class="mt-3">
+                                <div id="card-body">
+                                    <a href="https://www.google.com/maps?q=${product.eatery.location}" style="cursor: pointer">
+                                        <div id="map" style="width: 300px; height: 300px; border-radius: 8px;"></div>
+                                    </a>
+                                </div>                               
+                            </div>
+                        </div>  
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" id="close-btn" data-bs-dismiss="modal">Close</button>
             </div>`;
+}
+
+function initializeMap(location) {
+    const [latitude, longitude] = location.split(',').map(coord => coord.trim());
+
+    tt.setProductInfo('MyMapApp', '1.0');
+
+    const markerPosition = [longitude, latitude];
+    const zoomThresholdDistance = 500;
+
+    // Khởi tạo bản đồ
+    const map = tt.map({
+        key: 'szTHucPplAtuPjuDVkmfgcuJqgemDk6y',
+        container: 'map',
+        center: markerPosition,
+        zoom: 12,
+        scrollZoom: false // Bắt đầu với scrollZoom tắt
+    });
+
+    // Thêm điều khiển zoom và một marker vào bản đồ
+    map.addControl(new tt.NavigationControl());
+    new tt.Marker().setLngLat(markerPosition).addTo(map);
+
+    // Kích hoạt scrollZoom khi con trỏ gần marker
+    map.on('mousemove', (event) => {
+        const distanceToMarker = tt.LngLat.convert(markerPosition).distanceTo(event.lngLat);
+        if (distanceToMarker <= zoomThresholdDistance) {
+            map.scrollZoom.enable();  // Cho phép cuộn zoom gần marker
+        } else {
+            map.scrollZoom.disable(); // Tắt cuộn zoom khi ra khỏi phạm vi
+        }
+    });
+
+    document.addEventListener('shown.bs.tab', (event) => {
+        if (event.target.id === 'map-tab') {
+            const location = '10.762622,106.660172';  // Thay tọa độ vị trí sản phẩm thực tế
+            initializeMap(location);
+        }
+    });
 }
 
 // Tải sản phẩm lần đầu

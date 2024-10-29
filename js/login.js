@@ -1,4 +1,4 @@
-import {login} from './api.js';
+import {login} from './connectionApi.js';
 
 document.querySelector('.btn_submit button').addEventListener('click', async function () {
     // Lấy thông tin email và password

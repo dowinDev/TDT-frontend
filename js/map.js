@@ -1,4 +1,4 @@
-import {products} from './api.js';
+import {products} from './connectionApi.js';
 
 document.addEventListener('mainLoaded', function () {
     console.log("Map.js executed after main.js");
@@ -129,15 +129,17 @@ document.getElementById('formmon').addEventListener('submit', function (event) {
     const nameProduct = document.getElementById('foodName').value;
     const quantity = document.getElementById('quantity').value;
     const priceOption = document.getElementById('price_option').value;
+    const description = document.getElementById('description').value;
     const price = document.getElementById('price').value;
     const imageUpload = document.getElementById('imageUpload').files[0];
 
     const formData = new FormData();
-    formData.append('image', imageUpload); // imageFile là file ảnh được người dùng chọn
+    formData.append('image', imageUpload);
     formData.append('nameStore', nameStore);
     formData.append('phone', phone);
     formData.append('nameProduct', nameProduct);
     formData.append('quantity', quantity);
+    formData.append('description', description);
     formData.append('price', priceOption === 'free' ? 'Free' : price);
     formData.append('location', selectedLat + ", " + selectedLng)
 
