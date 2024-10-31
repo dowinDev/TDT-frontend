@@ -141,7 +141,7 @@ document.getElementById('formmon').addEventListener('submit', function (event) {
     formData.append('quantity', quantity);
     formData.append('description', description);
     formData.append('price', priceOption === 'free' ? 'Free' : price);
-    formData.append('location', selectedLat + ", " + selectedLng)
+    formData.append('location', selectedLng + ", " + selectedLat)
 
 
     if (!imageUpload) {
@@ -226,7 +226,7 @@ function fetchLocations() {
 function displayProducts(data) {
     data.forEach(product => {
         // Tạo marker và popup
-        const [latitude, longitude] = product.eatery.location.split(',').map(coord => coord.trim());
+        const [longitude, latitude] = product.eatery.location.split(',').map(coord => coord.trim());
         const marker = new tt.Marker().setLngLat([longitude, latitude]).addTo(map);
 
         const popupContent = `

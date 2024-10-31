@@ -15,13 +15,13 @@
 }
 
 
-
 .popup-image {
     width: 150px; /* Điều chỉnh kích thước hình ảnh */
     height: auto; /* Giữ tỉ lệ hình ảnh */
     border-radius: 10px; /* Làm bo góc hình ảnh */
     border: 2px solid #ccc; /* Thêm viền */
 }
+
 .tt-popup-content {
     background-color: #f9f9f9; /* Màu nền cho popup */
     color: #333; /* Màu chữ */
@@ -34,23 +34,23 @@
 }
 
 
-
 /*nhập thông tin món */
 #formmon {
-    display:none;
-    position: fixed;       /* Giữ form cố định trên màn hình */
-    top: 50%;              /* Căn giữa theo trục dọc */
-    left: 50%;             /* Căn giữa theo trục ngang */
+    display: none;
+    position: fixed; /* Giữ form cố định trên màn hình */
+    top: 50%; /* Căn giữa theo trục dọc */
+    left: 50%; /* Căn giữa theo trục ngang */
     transform: translate(-50%, -50%); /* Dịch chuyển để chính giữa hoàn toàn */
-    z-index: 9999;     
+    z-index: 9999;
     background: white;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     max-width: 400px; /* Chiều rộng tối đa của form */
     width: 75%; /* Chiều rộng phần trăm để thích ứng với màn hình nhỏ */
     margin: auto; /* Căn giữa form */
 }
+
 #formmon input, textarea, select {
     width: 100%;
     padding: 10px;
@@ -59,6 +59,7 @@
     border-radius: 4px;
     box-sizing: border-box; /* Để giữ cho kích thước tổng thể */
 }
+
 #butnhapmon {
     background-color: #28a745;
     color: white;
@@ -68,9 +69,11 @@
     cursor: pointer;
     width: 100%; /* Để nút gửi chiếm chiều rộng */
 }
+
 #butnhapmon:hover {
     background-color: #218838;
 }
+
 /*end nhập món */
 /*** Spinner End ***/
 .header {
@@ -82,7 +85,7 @@
 }
 
 .search-container {
-    z-index:999999;
+    z-index: 999999;
     display: flex;
     align-items: center;
     position: relative;
@@ -111,13 +114,15 @@
     outline: none;
     margin: 0 12px;
 }
+
 .back-to-top {
     position: fixed;
     right: 30px;
     bottom: 30px;
     z-index: 99;
 }
-/*form hiển thị tạo độ*/ 
+
+/*form hiển thị tạo độ*/
 #info {
     display: none;
     position: fixed;
@@ -129,6 +134,7 @@
     border: 1px solid #ccc;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
+
 /* Phần nền tối phía sau form */
 #overlay {
     display: none;
@@ -139,6 +145,34 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+#formMap {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.tabs-mapping .bottom {
+    width: 100%;
+    height: 250px;
+}
+
+.tabs-mapping .top p {
+    font-size: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #1a1919;
+}
+
+.tabs-mapping .top {
+    padding: 10px 5px 5px;
+    border-radius: 10px;
+    width: 50%;
+    background-color: #fefaf4;
+    margin-bottom: 5px;
+}
+
 #map {
     height: calc(100vh - 92px);
     position: fixed; /* Dính vào cuối cửa sổ trình duyệt */
@@ -146,9 +180,10 @@
     left: 0; /* Đặt ở bên trái */
     right: 0; /* Đặt ở bên phải */
     width: 100%; /* Chiều rộng 100% của màn hình */
-    z-index:0;
-     /* Chiều cao của bản đồ */
+    z-index: 0;
+    /* Chiều cao của bản đồ */
 }
+
 #overlay {
     display: none;
     position: fixed;
@@ -158,9 +193,10 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-  }
-  /* Form container */
-  #info {
+}
+
+/* Form container */
+#info {
     display: none;
     position: fixed;
     top: 50%;
@@ -174,13 +210,15 @@
     z-index: 2000;
     width: 80%;
     max-width: 300px;
-  }
-  #info h2 {
+}
+
+#info h2 {
     margin-top: 0;
     color: #0f5132;
-  }
-  /* Add Address button */
-  #infomation_form {
+}
+
+/* Add Address button */
+#infomation_form {
     padding: 10px 20px;
     position: fixed;
     top: 35%;
@@ -192,26 +230,30 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  #infomation_form:hover {
+}
+
+#infomation_form:hover {
     background-color: #0a3a23;
-  }
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
     #info {
-      width: 70%;
+        width: 70%;
     }
+
     #infomation_form {
-      font-size: 14px;
-      padding: 8px 16px;
+        font-size: 14px;
+        padding: 8px 16px;
     }
-  }
-#tieude{
-    font-size:10px;
+}
+
+#tieude {
+    font-size: 10px;
 }
 
 
-#currentLocationButton{
+#currentLocationButton {
     width: 30px;
     background-color: white;
     height: 30px;
@@ -224,20 +266,21 @@
     cursor: pointer;
     border: 1px solid white;
     justify-content: center; /* Căn giữa theo chiều ngang */
-    align-items: center; 
+    align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
 }
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
     #info {
-      width: 69%;
+        width: 69%;
     }
 
     #infomation_form {
-      font-size: 12px;
-      padding: 6px 12px;
+        font-size: 12px;
+        padding: 6px 12px;
     }
-  }
+}
+
 .marker {
     background-color: blue; /* Màu xanh cho dấu chấm */
     border-radius: 50%;
@@ -245,6 +288,7 @@
     height: 15px;
     border: 2px solid rgb(255, 255, 255);
 }
+
 #search-bar {
     margin: 10px;
     padding: 10px;
@@ -264,6 +308,7 @@
     border-radius: 50%;
     border: 2px solid white;
 }
+
 #layout-selector {
     margin: 20px 0;
 }
@@ -742,7 +787,7 @@ h6,
 } */
 
 footer {
-    font-family: 'Poppins', sans-serif'';
+    font-family: 'Poppins', sans-serif '';
     color: #6f6c7f;
     font-size: 16px;
     line-height: 1.6;
@@ -765,4 +810,17 @@ footer h6 {
 .copyright {
 
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.animated {
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.stars
+{
+    margin: 20px 0;
+    font-size: 24px;
+    color: #d17581;
 }

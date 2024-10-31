@@ -198,12 +198,13 @@ function createProductHTML(product) {
 }
 
 function createProductDetail(product) {
+    const [longitude, latitude] = product.eatery.location.split(',').map(coord => coord.trim());
     return `<div class="modal-header">
                 <h5 class="modal-title fw-bold" id="productDetailLabel" value="${product.id}">Product detail</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="container py-5">
+                <div class="container py-4">
                     <div class="row">
                         <div class="col-lg-6">
                             <img src="${product.image}" class="img-fluid" alt="Product Image">
@@ -275,18 +276,43 @@ function createProductDetail(product) {
                         </div>
                         <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                             <div class="mt-3">
-                                <a href="https://www.google.com/maps?q=${product.eatery.location}" style="cursor: pointer">
-                                    <div id="map" class="table mt-3" style="width: 100%; height: 300px; border-radius: 8px; overflow: hidden;"></div>
-                                </a>
+                                <div class="row" style="margin-top:40px;">
+                                    <div class="col-md-6">
+                                        <div class="well well-sm">
+                                            <div class="text-right">
+                                                <a class="btn btn-success btn-green" href="#reviews-anchor" id="open-review-box">Leave a Review</a>
+                                            </div>
+                                            
+                                            <div class="row" id="post-review-box" style="display:none;">
+                                                <div class="col-md-12">
+                                                    <form accept-charset="UTF-8" action="" method="post">
+                                                        <input id="ratings-hidden" name="rating" type="hidden"> 
+                                                        <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
+                                        
+                                                        <div class="text-right">
+                                                            <div class="stars starrr" data-rating="0"></div>
+                                                            <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
+                                                            <span class="glyphicon glyphicon-remove"></span>Cancel</a>
+                                                            <button class="btn btn-success btn-lg" type="submit">Save</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="maps" role="tabpanel" aria-labelledby="map-tab">
-                            <div class="mt-3">
-                                <div id="card-body">
-                                    <a href="https://www.google.com/maps?q=${product.eatery.location}" style="cursor: pointer">
-                                        <div id="map" style="width: 300px; height: 300px; border-radius: 8px;"></div>
+                            <div class="mt-4 tabs-mapping">
+                                <div class="top">   
+                                    <p>location: <span>${product.eatery.nameStore}</span></p>
+                                </div>
+                                <div class="bottom">
+                                    <a href="https://www.google.com/maps?q=${latitude},${longitude}">
+                                        <div id="formMap"></div>
                                     </a>
-                                </div>                               
+                                </div>
                             </div>
                         </div>  
                     </div>
@@ -298,7 +324,7 @@ function createProductDetail(product) {
 }
 
 function initializeMap(location) {
-    const [latitude, longitude] = location.split(',').map(coord => coord.trim());
+    const [longitude, latitude] = location.split(',').map(coord => coord.trim());
 
     tt.setProductInfo('MyMapApp', '1.0');
 
@@ -308,10 +334,15 @@ function initializeMap(location) {
     // Khởi tạo bản đồ
     const map = tt.map({
         key: 'szTHucPplAtuPjuDVkmfgcuJqgemDk6y',
-        container: 'map',
+        container: 'formMap',
         center: markerPosition,
         zoom: 12,
-        scrollZoom: false // Bắt đầu với scrollZoom tắt
+        scrollZoom: false,
+        fullscreenControl: false,   // Tắt nút toàn màn hình
+        centerControl: false,       // Tắt nút quay về vị trí trung tâm
+        rotateControl: false,       // Tắt nút xoay bản đồ
+        attributionControl: false,  // Tắt phần chú thích bản quyền
+        styleSwitcherControl: false // Tắt nút thay đổi kiểu bản đồ
     });
 
     // Thêm điều khiển zoom và một marker vào bản đồ
@@ -330,7 +361,7 @@ function initializeMap(location) {
 
     document.addEventListener('shown.bs.tab', (event) => {
         if (event.target.id === 'map-tab') {
-            const location = '10.762622,106.660172';  // Thay tọa độ vị trí sản phẩm thực tế
+            const location = '106.660172, 10.762622';
             initializeMap(location);
         }
     });

@@ -191,7 +191,7 @@ async function fetchWithRefreshToken(url, options = {}) {
 function fetchData() {
     try {
         fetchWithRefreshToken(checkToken, {method: 'POST'}).then(response => {
-            if (response.ok) {
+            if (response.status === 200) {
                 response.json().then(data => console.log('Data:', data));
             } else {
                 console.error('Failed to fetch data:', response.status);
