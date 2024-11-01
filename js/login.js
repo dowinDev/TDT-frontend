@@ -5,9 +5,21 @@ document.querySelector('.btn_submit button').addEventListener('click', async fun
     const userName = document.getElementById('userName').value;
     const password = document.getElementById('password').value;
 
+    const usernameField = document.getElementsByClassName('username')[0];
+    const passwordField = document.getElementsByClassName('password')[0];
+
+    usernameField.setCustomValidity("");
+    passwordField.setCustomValidity("");
+
     // Kiểm tra thông tin
-    if (!userName || !password) {
-        alert('Please enter both email and password.');
+    if (!userName) {
+        usernameField.setCustomValidity('Please enter userName.');
+        usernameField.reportValidity();
+        return;
+    }
+    if (!password) {
+        passwordField.setCustomValidity('please enter password.');
+        passwordField.reportValidity();
         return;
     }
 
@@ -20,7 +32,7 @@ document.querySelector('.btn_submit button').addEventListener('click', async fun
     })
         .then(response => {
             if (response.status === 404) {
-                  alert(`Login failed: ${response.message}`);
+                alert(`Login failed: ${response.message}`);
             }
             return response.json();
         })

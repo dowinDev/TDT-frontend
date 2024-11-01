@@ -7,8 +7,6 @@ const submitOtp = document.getElementById('submitOtp');
 const submitRegister = document.getElementById('submitRegister');
 
 const info = [];
-let min = 1;
-let sec = 0;
 
 submitRegister.addEventListener('click', async function () {
     // Lấy thông tin từ các input
@@ -19,7 +17,7 @@ submitRegister.addEventListener('click', async function () {
     info.check = document.getElementById('checkBox').checked;
 
     // Kiểm tra thông tin
-    if(!checkError()){
+    if (!checkError()) {
         return;
     }
 
@@ -153,50 +151,85 @@ function startTimer(duration) {
     }, 1000);
 }
 
-function checkError(){
-    // Kiểm tra đầu vào
-    if (!info.name || !info.email || !info.password || !info.confirmPassword) {
-        alert('Please fill in all fields.');
+function checkError() {
+    const nameField = document.getElementsByClassName('name')[0];
+    const emailField = document.getElementsByClassName('email')[0];
+    const passwordField = document.getElementsByClassName('password')[0];
+    const repeatPasswordField = document.getElementsByClassName('repeatPassword')[0];
+    const checkBoxField = document.getElementsByClassName('checkbox')[0];
+
+    nameField.setCustomValidity("");
+    emailField.setCustomValidity("");
+    passwordField.setCustomValidity("");
+    repeatPasswordField.setCustomValidity("");
+    checkBoxField.setCustomValidity("");
+
+    // Kiểm tra các trường hợp còn thiếu thông tin
+    if (!info.name) {
+        nameField.setCustomValidity('Please fill in UserName fields.');
+        nameField.reportValidity();
         return false;
     }
 
-// Kiểm tra độ dài của tên (ví dụ, tên phải từ 2-30 ký tự)
+    // Không cho phép khoảng trống và dấu trong username
+    const namePattern = /^[a-zA-Z0-9]*$/;
+    if (/\s/.test(info.name)) {
+        nameField.setCustomValidity('Username must not contain spaces.');
+        nameField.reportValidity();
+        return false;
+    }
+
+    if (!namePattern.test(info.name)) {
+        nameField.setCustomValidity('Username must not contain accented characters or special characters.');
+        nameField.reportValidity();
+        return false;
+    }
+
+    // Kiểm tra độ dài của tên (ví dụ, tên phải từ 2-30 ký tự)
     if (info.name.length < 2 || info.name.length > 30) {
-        alert('Name must be between 2 and 30 characters.');
+        nameField.setCustomValidity('Name must be between 2 and 30 characters.');
+        nameField.reportValidity();
         return false;
     }
 
-// Kiểm tra định dạng email (sử dụng regex cho định dạng email cơ bản)
+    // Kiểm tra định dạng email (sử dụng regex cho định dạng email cơ bản)
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(info.email)) {
-        alert('Please enter a valid email address.');
+    if (!emailPattern.test(info.email) || !info.email) {
+        emailField.setCustomValidity('Please enter a valid email address.');
+        emailField.reportValidity();
         return false;
     }
 
-// Kiểm tra độ dài của mật khẩu (ví dụ, tối thiểu 8 ký tự)
-    if (info.password.length < 6) {
-        alert('Password must be at least 8 characters.');
+    // Kiểm tra độ dài của mật khẩu (ví dụ, tối thiểu 8 ký tự)
+    if (info.password.length < 8) {
+        passwordField.setCustomValidity('Password must be at least 8 characters.');
+        passwordField.reportValidity();
         return false;
     }
 
-// Kiểm tra ký tự đặc biệt và số trong mật khẩu
+    // Kiểm tra ký tự đặc biệt và số trong mật khẩu
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-    if (!passwordPattern.test(info.password)) {
-        alert('Password must include at least one letter, one number, and one special character.');
+    if (!passwordPattern.test(info.password) || !info.password) {
+        passwordField.setCustomValidity('Password must include at least one letter, one number, and one special character or fill in password.');
+        passwordField.reportValidity();
         return false;
     }
 
-// Kiểm tra mật khẩu trùng khớp
-    if (info.password !== info.confirmPassword) {
-        alert('Passwords do not match.');
+    // Kiểm tra mật khẩu trùng khớp
+    if (info.password !== info.confirmPassword || !info.confirmPassword) {
+        repeatPasswordField.setCustomValidity('Passwords do not match.');
+        repeatPasswordField.reportValidity();
         return false;
     }
 
-// Kiểm tra chấp nhận các điều khoản
+    // Kiểm tra chấp nhận các điều khoản
     if (!info.check) {
-        alert('You must agree to all statements in the Terms of Service.');
+        checkBoxField.setCustomValidity('You must agree to all statements in the Terms of Service.');
+        checkBoxField.reportValidity();
         return false;
     }
 
     return true;
 }
+
+
