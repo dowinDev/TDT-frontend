@@ -16,6 +16,7 @@ function removeQueryParam(param) {
     url.searchParams.delete(param);
     window.history.replaceState({}, document.title, url);
 }
+
 function close() {
     document.getElementById("close-btn").addEventListener("click", function () {
         removeQueryParam('id');
@@ -167,6 +168,7 @@ function openProductDetail(product) {
     // Hiển thị thông tin sản phẩm vào modal
     document.getElementById('productDetail').innerHTML = createProductDetail(product);
     initializeMap(product.eatery.location);
+    document.dispatchEvent(new Event('reviewLoaded'));
     close();
 
     // Hiển thị modal
@@ -190,7 +192,7 @@ function createProductHTML(product) {
                 <h3>${product.nameProduct}</h3>
                 <p><strong>Quantity:</strong> ${product.quantity}</p>
                 <p class="price">${product.price === "Free" ? "Free" :
-                    Number(product.price).toLocaleString("de-DE") + " đ"}</p>
+        Number(product.price).toLocaleString("de-DE") + " đ"}</p>
                 <button id="btn-orderNow" class="button" value="${product.id}">Order Now</button>
             </div>
         </div>
@@ -275,34 +277,22 @@ function createProductDetail(product) {
                             </table>
                         </div>
                         <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                            <div class="mt-3">
-                                <div class="row" style="margin-top:40px;">
-                                    <div class="col-md-6">
-                                        <div class="well well-sm">
-                                            <div class="text-right">
-                                                <a class="btn btn-success btn-green" href="#reviews-anchor" id="open-review-box">Leave a Review</a>
-                                            </div>
-                                            
-                                            <div class="row" id="post-review-box" style="display:none;">
-                                                <div class="col-md-12">
-                                                    <form accept-charset="UTF-8" action="" method="post">
-                                                        <input id="ratings-hidden" name="rating" type="hidden"> 
-                                                        <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
-                                        
-                                                        <div class="text-right">
-                                                            <div class="stars starrr" data-rating="0"></div>
-                                                            <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
-                                                            <span class="glyphicon glyphicon-remove"></span>Cancel</a>
-                                                            <button class="btn btn-success btn-lg" type="submit">Save</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div> 
-                                    </div>
-                                 </div>
+                <div class="mt-3">
+                    <div class="text-end">
+                        <button class="btn btn-success" id="open-review-box">Leave a Review</button>
+                    </div>
+                    <div id="post-review-box" style="display: none;">
+                        <form accept-charset="UTF-8" action="" method="post">
+                            <input id="ratings-hidden" name="rating" type="hidden"> 
+                            <textarea class="form-control mb-3" id="new-review" name="comment" placeholder="Enter your review here..." rows="4"></textarea>
+                            <div class="d-flex justify-content-end gap-2">
+                                <button class="btn btn-danger btn-sm" id="close-review-box">Cancel</button>
+                                <button class="btn btn-success btn-sm" type="submit">Save</button>
                             </div>
-                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
                         <div class="tab-pane fade" id="maps" role="tabpanel" aria-labelledby="map-tab">
                             <div class="mt-4 tabs-mapping">
                                 <div class="top">   
@@ -324,45 +314,38 @@ function createProductDetail(product) {
 }
 
 function initializeMap(location) {
-    const [longitude, latitude] = location.split(',').map(coord => coord.trim());
-
-    tt.setProductInfo('MyMapApp', '1.0');
-
-    const markerPosition = [longitude, latitude];
-    const zoomThresholdDistance = 500;
-
-    // Khởi tạo bản đồ
-    const map = tt.map({
-        key: 'szTHucPplAtuPjuDVkmfgcuJqgemDk6y',
-        container: 'formMap',
-        center: markerPosition,
-        zoom: 12,
-        scrollZoom: false,
-        fullscreenControl: false,   // Tắt nút toàn màn hình
-        centerControl: false,       // Tắt nút quay về vị trí trung tâm
-        rotateControl: false,       // Tắt nút xoay bản đồ
-        attributionControl: false,  // Tắt phần chú thích bản quyền
-        styleSwitcherControl: false // Tắt nút thay đổi kiểu bản đồ
-    });
-
-    // Thêm điều khiển zoom và một marker vào bản đồ
-    map.addControl(new tt.NavigationControl());
-    new tt.Marker().setLngLat(markerPosition).addTo(map);
-
-    // Kích hoạt scrollZoom khi con trỏ gần marker
-    map.on('mousemove', (event) => {
-        const distanceToMarker = tt.LngLat.convert(markerPosition).distanceTo(event.lngLat);
-        if (distanceToMarker <= zoomThresholdDistance) {
-            map.scrollZoom.enable();  // Cho phép cuộn zoom gần marker
-        } else {
-            map.scrollZoom.disable(); // Tắt cuộn zoom khi ra khỏi phạm vi
-        }
-    });
 
     document.addEventListener('shown.bs.tab', (event) => {
         if (event.target.id === 'map-tab') {
-            const location = '106.660172, 10.762622';
-            initializeMap(location);
+            const [longitude, latitude] = location.split(',').map(coord => coord.trim());
+
+            tt.setProductInfo('MyMapApp', '1.0');
+
+            const markerPosition = [longitude, latitude];
+            const zoomThresholdDistance = 500;
+
+            // Khởi tạo bản đồ
+            const map = tt.map({
+                key: 'szTHucPplAtuPjuDVkmfgcuJqgemDk6y',
+                container: 'formMap',
+                center: markerPosition,
+                zoom: 12,
+                scrollZoom: false,
+            });
+
+            // Thêm điều khiển zoom và một marker vào bản đồ
+            map.addControl(new tt.NavigationControl());
+            new tt.Marker().setLngLat(markerPosition).addTo(map);
+
+            // Kích hoạt scrollZoom khi con trỏ gần marker
+            map.on('mousemove', (event) => {
+                const distanceToMarker = tt.LngLat.convert(markerPosition).distanceTo(event.lngLat);
+                if (distanceToMarker <= zoomThresholdDistance) {
+                    map.scrollZoom.enable();  // Cho phép cuộn zoom gần marker
+                } else {
+                    map.scrollZoom.disable(); // Tắt cuộn zoom khi ra khỏi phạm vi
+                }
+            });
         }
     });
 }
