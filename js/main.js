@@ -176,7 +176,8 @@ async function fetchWithRefreshToken(url, options = {}) {
                         localStorage.setItem('token', newAccessToken);
                     } else {
                         console.error('Refresh token expired or invalid');
-                        window.location.href = '../page/login.html';
+                        alert('Refresh token expired or invalid');
+                        //window.location.href = '../page/login.html';
                     }
                 });
         }

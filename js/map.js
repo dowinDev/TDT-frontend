@@ -103,10 +103,9 @@ map.on('click', function (event) {
     let form = document.getElementById('info');
     let overlay = document.getElementById('overlay');
     let formon = document.getElementById('formmon');
-    // let popupContent = document.getElementById('popupContent');
+
     form.style.display = 'block';
     overlay.style.display = 'block';
-    // popupContent.style.display = 'block';
 
     // thoát khỏi màn info
     overlay.addEventListener('click', () => {

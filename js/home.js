@@ -231,29 +231,34 @@ function createProductDetail(product) {
                     </div>
                     <ul class="nav nav-tabs mt-5" id="productTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description"
-                                    type="button" role="tab" aria-controls="description" aria-selected="true">Description
+                            <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+                                    data-bs-target="#description"
+                                    type="button" role="tab" aria-controls="description" aria-selected="true">
+                                Description
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs" type="button"
+                            <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs"
+                                    type="button"
                                     role="tab" aria-controls="specs" aria-selected="false">Specifications
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button"
+                            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
+                                    type="button"
                                     role="tab" aria-controls="reviews" aria-selected="false">Reviews
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button data-mdb-tab-init class="nav-link" id="map-tab" 
+                            <button data-mdb-tab-init class="nav-link" id="map-tab"
                                     data-bs-toggle="tab" data-bs-target="#maps" type="button"
                                     role="tab" aria-controls="map" aria-selected="false">Map
                             </button>
                         </li>
                     </ul>
                     <div class="tab-content" id="productTabContent" style="overflow: hidden;">
-                        <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                        <div class="tab-pane fade show active" id="description" role="tabpanel"
+                             aria-labelledby="description-tab">
                             <p class="mt-3">${product.description} </p>
                         </div>
                         <div class="tab-pane fade" id="specs" role="tabpanel" aria-labelledby="specs-tab">
@@ -277,25 +282,35 @@ function createProductDetail(product) {
                             </table>
                         </div>
                         <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                <div class="mt-3">
-                    <div class="text-end">
-                        <button class="btn btn-success" id="open-review-box">Leave a Review</button>
-                    </div>
-                    <div id="post-review-box" style="display: none;">
-                        <form accept-charset="UTF-8" action="" method="post">
-                            <input id="ratings-hidden" name="rating" type="hidden"> 
-                            <textarea class="form-control mb-3" id="new-review" name="comment" placeholder="Enter your review here..." rows="4"></textarea>
-                            <div class="d-flex justify-content-end gap-2">
-                                <button class="btn btn-danger btn-sm" id="close-review-box">Cancel</button>
-                                <button class="btn btn-success btn-sm" type="submit">Save</button>
+                            <div class="mt-3">
+                                <div class="text-end">
+                                    <th><span id="productSpan" value="${product.id}"></span></th>
+                                    <button class="btn btn-success" id="open-review-box">Comments</button>
+                                </div>
+                                <div id="post-review-box" style="display: none;">
+                                    <form accept-charset="UTF-8" action="" method="post">
+                                        <input id="ratings-hidden" name="rating" type="hidden">
+                                        <textarea class="form-control mb-3" id="new-review" name="comment"
+                                                  placeholder="Enter your review here..." rows="4"></textarea>
+                                        <div class="star-rating d-flex justify-content-end gap-2" style="margin-bottom: 10px">
+                                            <i class="far fa-star" id="star1" data-value="1"></i>
+                                            <i class="far fa-star" id="star2" data-value="2"></i>
+                                            <i class="far fa-star" id="star3" data-value="3"></i>
+                                            <i class="far fa-star" id="star4" data-value="4"></i>
+                                            <i class="far fa-star" id="star5" data-value="5"></i>
+                                        </div>
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <button class="btn btn-danger btn-sm" id="close-review-box">Cancel</button>
+                                            <button id="save-comment" class="btn btn-success btn-sm" type="submit">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="card-comment"></div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                        </div>
                         <div class="tab-pane fade" id="maps" role="tabpanel" aria-labelledby="map-tab">
                             <div class="mt-4 tabs-mapping">
-                                <div class="top">   
+                                <div class="top">
                                     <p>location: <span>${product.eatery.nameStore}</span></p>
                                 </div>
                                 <div class="bottom">
@@ -304,7 +319,7 @@ function createProductDetail(product) {
                                     </a>
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </div>

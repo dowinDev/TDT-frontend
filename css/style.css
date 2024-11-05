@@ -787,7 +787,7 @@ h6,
 } */
 
 footer {
-    font-family: 'Poppins', sans-serif '';
+    font-family: 'Poppins', sans-serif;
     color: #6f6c7f;
     font-size: 16px;
     line-height: 1.6;
@@ -823,4 +823,16 @@ footer h6 {
     margin: 20px 0;
     font-size: 24px;
     color: #d17581;
+}
+
+.card-inner{
+    margin-left: 4rem;
+}
+
+.star-rating .fas {
+    color: gold; /* Màu vàng cho các ngôi sao đầy */
+}
+
+.star-rating .far {
+    color: gray; /* Màu xám cho các ngôi sao rỗng */
 }

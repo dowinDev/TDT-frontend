@@ -1,4 +1,4 @@
-const env = 'server';
+const env = 'dev';
 
 export const limitProduct = 8;
 
@@ -19,3 +19,4 @@ export const users = `${http}/users`;
 export const products = `${http}/products`;
 export const refresh = `${http}/accounts/refresh`;
 export const checkToken = `${http}/accounts/checkToken`;
+export const FeedBack = `${http}/feed-back`;
