@@ -176,7 +176,7 @@ async function fetchWithRefreshToken(url, options = {}) {
                         localStorage.setItem('token', newAccessToken);
                     } else {
                         console.error('Refresh token expired or invalid');
-                        alert('Refresh token expired or invalid');
+                        alert('You don\'t have account');
                         //window.location.href = '../page/login.html';
                     }
                 });

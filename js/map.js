@@ -166,7 +166,7 @@ document.getElementById('formmon').addEventListener('submit', function (event) {
                 if (data.status === 200 && data.code === '00' && data.message === 'success!') {
                     alert('Product information has been successfully saved!');
                 } else {
-                    alert('Failed to save product information. Error: ' + data.message);
+                    alert('Failed to save product information. Error: You don\'t have account');
 
                 }
 
