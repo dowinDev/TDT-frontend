@@ -1,8 +1,7 @@
 // Imports và khởi tạo biến
-import {checkToken, logOut, refresh} from './connectionApi.js';
+import {checkToken, logOut, refreshToken} from './connectionApi.js';
 
-const localToken = localStorage.getItem('token');
-const localRefreshToken = localStorage.getItem('refreshToken');
+let localToken;
 let isLoggedIn = false;
 let search;
 
@@ -94,6 +93,7 @@ function loadHeaderAndFooter() {
             document.dispatchEvent(new Event('mainLoaded'));
             document.getElementById("login-btn").addEventListener("click", logout);
             isLoggedIn = localToken !== null;
+            fetchWithRefreshToken();
             updateLoginButton();
         }).catch(error => console.error('Error loading header:', error));
     fetch('../Shared/footer.html').then(response => response.text())
@@ -101,7 +101,6 @@ function loadHeaderAndFooter() {
             document.getElementById("footer").innerHTML = data;
         })
         .catch(error => console.error('Error loading footer:', error));
-    fetchData();
 }
 
 function loadContent(page, url) {
@@ -109,7 +108,7 @@ function loadContent(page, url) {
     fetch(url).then(response => response.text())
         .then(data => {
             if (window.location.pathname !== url) {
-                history.pushState({ path: page }, '', page);
+                history.pushState({path: page}, '', page);
             } else {
                 updateActiveLink(page);
             }
@@ -144,6 +143,7 @@ function updateLoginButton() {
 }
 
 async function logout() {
+    localToken = localStorage.getItem('token');
     if (isLoggedIn) {
         isLoggedIn = false;
         await fetch(logOut, {
@@ -152,6 +152,7 @@ async function logout() {
         })
             .then(() => {
                 localStorage.removeItem("token");
+                localStorage.removeItem('refreshToken');
                 document.getElementById("login-btn").innerHTML = "Login/Register";
             });
     } else {
@@ -159,47 +160,29 @@ async function logout() {
     }
 }
 
-async function fetchWithRefreshToken(url, options = {}) {
+function fetchWithRefreshToken() {
+    localToken = localStorage.getItem('token');
     try {
-        options.headers = {'Authorization': `Bearer ${localToken}`};
-        let response = await fetch(url, options);
-        if (response.status === 403) {
-            await fetch(refresh, {
+        if (localToken !== null) {
+            fetch(checkToken, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({refreshToken: localRefreshToken})
-            })
-                .then(res => res.json())
-                .then(res => {
-                    if (res.status === 200) {
-                        const newAccessToken = res.data;
-                        localStorage.setItem('token', newAccessToken);
-                    } else {
-                        console.error('Refresh token expired or invalid');
-                        alert('You don\'t have account');
-                        //window.location.href = '../page/login.html';
+                headers: {'Authorization': `Bearer ${localToken}`},
+            }).then(response => {
+                response.json().then(data => {
+                    if (data.code === 'SA11') {
+                        refreshToken();
+                        fetchWithRefreshToken();
+                    } else if (response.code === '00') {
+                        response.json().then(data => console.log('Data:', data));
                     }
-                });
+                })
+            });
+        } else {
+            console.error('Failed to fetch data:');
         }
-        return response;
     } catch (error) {
         console.error('Error in fetchWithRefreshToken:', error);
         throw error;
-    }
-}
-
-// Fetch data using fetchWithRefreshToken
-function fetchData() {
-    try {
-        fetchWithRefreshToken(checkToken, {method: 'POST'}).then(response => {
-            if (response.status === 201) {
-                response.json().then(data => console.log('Data:', data));
-            } else {
-                console.error('Failed to fetch data:', response.status);
-            }
-        });
-    } catch (error) {
-        console.error('Error fetching data:', error);
     }
 }
 

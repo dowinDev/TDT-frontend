@@ -1,4 +1,4 @@
-import {products, limitProduct} from "./connectionApi.js";
+import {products, limitProduct, refreshToken} from "./connectionApi.js";
 
 let currentPage = 1;
 const limit = limitProduct;
@@ -83,16 +83,22 @@ function loadProductById(id) {
     fetch(products + `/${id}`, {
         headers: {'Authorization': `Bearer ${token}`},
     })
-        .then(response => response.json())
-        .then(data => {
-            const product = data.data;
+        .then(response => response.json().then(data => {
+            if (data.code === 'SA11') {
+                refreshToken();
+                loadProductById(id);
+            } else if (data.code === '00') {
+                const product = data.data;
 
-            if (product) {
-                openProductDetail(product);
+                if (product) {
+                    openProductDetail(product);
+                } else {
+                    console.error('Fetched data is not an product.');
+                }
             } else {
-                console.error('Fetched data is not an product.');
+                console.error('cannot get product: ' + id);
             }
-        })
+        }))
         .catch(error => {
             alert('An error occurred while fetching the product. Please try again later.');
             console.error('Error:', error);
@@ -223,10 +229,6 @@ function createProductDetail(product) {
                                 <input type="number" class="form-control" value="1" style="max-width: 80px;">
                                 <button class="btn btn-primary" type="button">Add to Cart</button>
                             </div>
-                            <div>
-                                <button class="btn btn-outline-secondary btn-sm" type="button">Add to Wishlist</button>
-                                <button class="btn btn-outline-secondary btn-sm" type="button">Compare</button>
-                            </div>
                         </div>
                     </div>
                     <ul class="nav nav-tabs mt-5" id="productTab" role="tablist">
@@ -270,14 +272,6 @@ function createProductDetail(product) {
                                 <tr>
                                     <th>Phone</th>
                                     <td>${product.contact}</td>
-                                </tr>
-                                <tr>
-                                    <th>Weight</th>
-                                    <td>1kg</td>
-                                </tr>
-                                <tr>
-                                    <th>Dimensions</th>
-                                    <td>10 x 20 x 5 cm</td>
                                 </tr>
                             </table>
                         </div>

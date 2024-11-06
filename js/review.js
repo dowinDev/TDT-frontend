@@ -1,10 +1,11 @@
-import {FeedBack} from "./connectionApi.js";
+import {FeedBack, refreshToken} from "./connectionApi.js";
 
 document.addEventListener('reviewLoaded', function () {
     console.log("Map.js executed after main.js");
     // Code của map.js sẽ chạy sau khi main.js đã tải xong
 
     review();
+    getComment();
 });
 
 function review() {
@@ -22,13 +23,15 @@ function review() {
 
     closeReviewBox.addEventListener("click", (event) => {
         event.preventDefault();
+        getComment();
+
         postReviewBox.style.display = "none";
         cardComment.style.display = "block";
         newReview.value = '';
         openReviewBox.style.display = "inline-block";
     });
 
-    getComment();
+    postComment();
     pickStar();
 }
 
@@ -40,7 +43,14 @@ function getComment() {
         fetch(FeedBack + `?productId=${id}`, {
             method: 'GET',
             headers: {'Authorization': `Bearer ${token}`},
-        }).then(response => response.json())
+        })
+            .then(response => response.json().then(data => {
+                if (data.code === 'SA11') {
+                    alert('You don\'t have account');
+                    refreshToken();
+                    getComment();
+                }
+            }))
             .then(response => {
                 for (const data of response.data.content) {
                     document.getElementById('card-comment').innerHTML += showComment(data);
@@ -49,7 +59,7 @@ function getComment() {
     })
 }
 
-function postComment(){
+function postComment() {
     const id = document.getElementById('productSpan').getAttribute('value');
     const token = localStorage.getItem('token');
     const message = document.getElementById('new-review').value;
@@ -58,17 +68,29 @@ function postComment(){
     document.getElementById('save-comment').addEventListener('click', () => {
         fetch(FeedBack, {
             method: 'POST',
-            headers: {'Authorization':`Bearer ${token}`},
+            headers: {'Authorization': `Bearer ${token}`},
             body: {
                 productId: id,
                 message: message,
                 rating: rating,
             }
-        })
+        }).then(response => response.json().then(data =>{
+            if (data.code === 'SA11') {
+                alert('You don\'t have account');
+                refreshToken();
+                postComment();
+            }
+        }))
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            })
     })
 }
 
-function pickStar(){
+function pickStar() {
     const stars = document.querySelectorAll('.star-rating i');
     let selectedRating = 0;
 

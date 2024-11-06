@@ -7,22 +7,36 @@
             data-bs-target="#navbarCollapse">
       <span class="fa fa-bars text-primary"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <div class="navbar-nav mx-auto">
-        <a id="home-link" href="../index.html" class="nav-item nav-link active">Home</a>
-        <a id="map-link" href="../page/map.html" class="nav-item nav-link ">Map</a>
-        <a id="blog-link" href="../page/blog.html" class="nav-item nav-link">Blog</a>
-        <a id="contact-link" href="../page/contact.html" class="nav-item nav-link">Contact</a>
-        <a id="event-link" href="../page/event.html" class="nav-item nav-link">Event</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a id="home-link" href="../index.html" class="nav-link active">Home</a>
+            </li>
+            <li class="nav-item">
+              <a id="map-link" href="../page/map.html" class="nav-link">Map</a>
+            </li>
+            <li class="nav-item">
+              <a id="blog-link" href="../page/blog.html" class="nav-link">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a id="contact-link" href="../page/contact.html" class="nav-link">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a id="event-link" href="../page/event.html" class="nav-link">Event</a>
+            </li>
+          </ul>
+          <form class="d-flex search-container me-2">
+            <input type="search" id="searchInput" class="form-control" placeholder="Search..." aria-label="Search">
+            <button id="searchButton" class="btn btn-outline-primary" type="submit">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+          <a id="login-btn" href="../page/login.html" class="btn btn-primary rounded-pill">Login/Logout</a>
+        </div>
       </div>
-      <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search..." class="search-input">
-        <button id="searchButton" class="search-btn" type="submit">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </div>
-      <a id="login-btn" href="../page/login.html"
-         class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Login/Logout</a>
-    </div>
+    </nav>
+
   </nav>
 </div>

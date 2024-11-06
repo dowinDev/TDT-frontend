@@ -1,4 +1,4 @@
-import {register, sendOtp, verifyOtp} from "./connectionApi.js";
+import {register, sendOtp, verifyOtp, refreshToken} from "./connectionApi.js";
 
 const inputOtp = document.getElementById('otp-input');
 const countDown = document.getElementById('timer');
@@ -27,66 +27,12 @@ submitRegister.addEventListener('click', async function () {
 
 // Xử lý sự kiện gửi OTP
 submitOtp.addEventListener('click', async (event) => {
-    event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+    event.preventDefault();
 
     const otp = inputOtp.value;
 
     try {
-        // Gửi yêu cầu xác thực OTP
-        fetch(verifyOtp, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: info.email,
-                otp: otp
-            }),
-        })
-            .then(response => response.json())
-            .then(response => {
-                // Kiểm tra phản hồi từ server
-                const data = response.data;
-                if (response.status === 200) {
-                    // Xử lý nếu xác thực OTP thành công
-                    alert('OTP verified successfully! Proceeding to register.');
-                    // Gọi API đăng ký
-                    fetch(register, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            userName: info.name,
-                            email: info.email,
-                            password: info.password,
-                            authKey: data.authKey
-                        }),
-                    })
-                        .then(response => response.json())
-                        .then(response => {
-                            const data = response.data;
-                            if (response.status === 200) {
-                                // Đăng ký thành công
-                                alert('Registration successful!');
-                                const token = data['token'];
-                                const refreshToken = data['refreshToken']
-                                console.log('Token:', token);
-
-                                localStorage.setItem('token', token);
-                                localStorage.setItem('refreshToken', refreshToken);
-
-                                window.location.href = '../index.html';
-                            } else {
-                                // Đăng ký thất bại
-                                alert(data.message || 'Registration failed. Please try again.');
-                            }
-                        });
-                } else {
-                    // Xử lý nếu xác thực OTP thất bại
-                    alert(data.message || 'OTP verification failed. Please try again.');
-                }
-            });
+        verifyToken(otp);
     } catch (error) {
         console.error('Error:', error);
         alert('An error occurred while trying to verify OTP.');
@@ -96,6 +42,70 @@ submitOtp.addEventListener('click', async (event) => {
 reSendOtp.addEventListener('click', async function () {
     otpSend();
 })
+
+// Gửi yêu cầu xác thực OTP
+function verifyToken(otp) {
+    fetch(verifyOtp, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: info.email,
+            otp: otp
+        }),
+    })
+        .then(response => response.json().then(data => {
+            if (data.code === 'SA11') {
+                refreshToken();
+                verifyToken(otp);
+            } else if (data.code === '00') {
+                // Kiểm tra phản hồi từ server
+                const content = data.data;
+                registerFun(content);
+
+            } else {
+                alert(data.message || 'OTP verification failed. Please try again.');
+            }
+        }));
+}
+
+// Gọi API đăng ký
+function registerFun(data) {
+    fetch(register, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            userName: info.name,
+            email: info.email,
+            password: info.password,
+            authKey: data.authKey
+        }),
+    })
+        .then(response => response.json().then(req => {
+            if (req.code === 'SA11') {
+                refreshToken();
+                registerFun(data);
+            } else if (req.code === '00') {
+                const data = req.data;
+                // Đăng ký thành công
+                alert('Registration successful!');
+                const token = data['token'];
+                const refreshToken = data['refreshToken']
+                console.log('Token:', token);
+
+                localStorage.setItem('token', token);
+                localStorage.setItem('refreshToken', refreshToken);
+
+                window.location.href = '../index.html';
+            } else {
+                // Đăng ký thất bại
+                alert(data.message || 'Registration failed. Please try again.');
+            }
+        }));
+}
 
 function otpSend() {
     try {
@@ -108,7 +118,12 @@ function otpSend() {
                 email: info.email,
             }),
         })
-            .then(response => response.json())
+            .then(response => response.json().then(data => {
+                if (data.code === 'SA11') {
+                    refreshToken();
+                    otpSend();
+                }
+            }))
             .then(response => {
                 if (response.ok) {
                     alert('OTP has been sent to your email!');

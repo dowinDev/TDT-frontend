@@ -1,4 +1,4 @@
-import {products} from './connectionApi.js';
+import {products, refreshToken} from './connectionApi.js';
 
 document.addEventListener('mainLoaded', function () {
     console.log("Map.js executed after main.js");
@@ -150,58 +150,74 @@ document.getElementById('formmon').addEventListener('submit', function (event) {
 
     const reader = new FileReader();
     reader.onload = function (e) {
-        const imageUrl = e.target.result;
-        const token = localStorage.getItem('token');
 
-        // Gọi API POST để lưu trữ thông tin
-        fetch(products, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-            body: formData,
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 200 && data.code === '00' && data.message === 'success!') {
-                    alert('Product information has been successfully saved!');
-                } else {
-                    alert('Failed to save product information. Error: You don\'t have account');
-
-                }
-
-                map.flyTo({center: [selectedLng, selectedLat], zoom: 15});
-                document.getElementById('formmon').reset();
-                location.reload();
-            })
-            .catch(error => {
-                alert('Failed to save product information.');
-                console.error('Error:', error);
-            });
+        postProduct(formData)
     };
 
     reader.readAsDataURL(imageUpload);
 });
 
+// Gọi API POST để lưu trữ thông tin
+function postProduct(formData) {
+    const token = localStorage.getItem('token');
+    fetch(products, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData,
+    })
+        .then(response => {
+            if (response.code === 'SA11') {
+                alert('You don\'t have account');
+                refreshToken();
+                postProduct(formData);
+            }
+        })
+        .then(data => {
+            if (data.code === '00') {
+                alert('Product information has been successfully saved!');
+            } else {
+                alert('Failed to save product information. Error: You don\'t have account');
+
+            }
+
+            map.flyTo({center: [selectedLng, selectedLat], zoom: 15});
+            document.getElementById('formmon').reset();
+            location.reload();
+        })
+        .catch(error => {
+            alert('Failed to save product information.');
+            console.error('Error:', error);
+        });
+}
+
 // Gọi API GET để lấy dữ liệu và lưu vào localStorage
 function fetchLocations() {
 
     fetch(products)
-        .then(response => response.json())
-        .then(data => {
-            // Lấy danh sách sản phẩm từ thuộc tính 'content'
-            const products = data.data.content;
+        .then(response => response.json().then(data =>{
+            if (data.code === 'SA11') {
+                refreshToken();
+                fetchLocations();
+            }else if(data.code === '00'){
+                // Lấy danh sách sản phẩm từ thuộc tính 'content'
+                const products = data.data.content;
 
-            // Kiểm tra xem dữ liệu trả về từ API có phải là mảng không
-            if (Array.isArray(products)) {
-                // Lưu dữ liệu vào localStorage
-                localStorage.setItem('locations', JSON.stringify(products));
+                // Kiểm tra xem dữ liệu trả về từ API có phải là mảng không
+                if (Array.isArray(products)) {
+                    // Lưu dữ liệu vào localStorage
+                    localStorage.setItem('locations', JSON.stringify(products));
 
-                // Hiển thị các sản phẩm đã lưu
-                displayProducts(products);
-            } else {
-                console.error('Fetched content is not an array.');
+                    // Hiển thị các sản phẩm đã lưu
+                    displayProducts(products);
+                } else {
+                    console.error('Fetched content is not an array.');
+                }
             }
+        }))
+        .then(data => {
+
         })
         .catch(error => {
             alert('Failed to fetch locations.');
