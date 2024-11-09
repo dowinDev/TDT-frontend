@@ -20,11 +20,10 @@ function searchLocation(query) {
     const apiKey = 'szTHucPplAtuPjuDVkmfgcuJqgemDk6y';
     const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(query)}.json?key=${apiKey}`;
     fetch(url)
-        .then(response => response.json())
-        .then(data => {
+        .then(response => response.json().then(data => {
             if (data.results && data.results.length > 1) {
-                var firstResult = data.results[0];
-                var location = {
+                const firstResult = data.results[0];
+                const location = {
                     lng: firstResult.position.lon,
                     lat: firstResult.position.lat,
                 };
@@ -32,9 +31,8 @@ function searchLocation(query) {
                 map.setZoom(14);
             } else {
                 alert('No location found.');
-                fetch(url)
             }
-        })
+        }))
         .catch(error => {
             console.error('An error occurred:', error);
         });
@@ -167,25 +165,22 @@ function postProduct(formData) {
         },
         body: formData,
     })
-        .then(response => {
-            if (response.code === 'SA11') {
+        .then(response => response.json().then(data => {
+            if (data.code === 'SA11') {
                 alert('You don\'t have account');
                 refreshToken();
                 postProduct(formData);
-            }
-        })
-        .then(data => {
-            if (data.code === '00') {
+            } else if (data.code === '00') {
                 alert('Product information has been successfully saved!');
+
+
             } else {
                 alert('Failed to save product information. Error: You don\'t have account');
-
             }
-
             map.flyTo({center: [selectedLng, selectedLat], zoom: 15});
             document.getElementById('formmon').reset();
             location.reload();
-        })
+        }))
         .catch(error => {
             alert('Failed to save product information.');
             console.error('Error:', error);
@@ -196,11 +191,11 @@ function postProduct(formData) {
 function fetchLocations() {
 
     fetch(products)
-        .then(response => response.json().then(data =>{
+        .then(response => response.json().then(data => {
             if (data.code === 'SA11') {
                 refreshToken();
                 fetchLocations();
-            }else if(data.code === '00'){
+            } else if (data.code === '00') {
                 // Lấy danh sách sản phẩm từ thuộc tính 'content'
                 const products = data.data.content;
 

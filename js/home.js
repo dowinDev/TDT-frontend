@@ -295,7 +295,7 @@ function createProductDetail(product) {
                                         </div>
                                         <div class="d-flex justify-content-end gap-2">
                                             <button class="btn btn-danger btn-sm" id="close-review-box">Cancel</button>
-                                            <button id="save-comment" class="btn btn-success btn-sm" type="submit">Save</button>
+                                            <button id="save-comment" class="btn btn-success" type="button">Save</button>
                                         </div>
                                     </form>
                                 </div>

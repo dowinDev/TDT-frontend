@@ -1,5 +1,7 @@
 import {FeedBack, refreshToken} from "./connectionApi.js";
 
+let starValue;
+
 document.addEventListener('reviewLoaded', function () {
     console.log("Map.js executed after main.js");
     // Code của map.js sẽ chạy sau khi main.js đã tải xong
@@ -13,7 +15,7 @@ function review() {
     const closeReviewBox = document.getElementById("close-review-box");
     const postReviewBox = document.getElementById("post-review-box");
     const cardComment = document.getElementById("card-comment");
-    const newReview = document.getElementById("new-review")
+    const newReview = document.getElementById("new-review");
 
     openReviewBox.addEventListener("click", () => {
         postReviewBox.style.display = "block";
@@ -44,41 +46,55 @@ function getComment() {
             method: 'GET',
             headers: {'Authorization': `Bearer ${token}`},
         })
-            .then(response => response.json().then(data => {
-                if (data.code === 'SA11') {
+            .then(response => response.json().then(comment => {
+                if (comment.code === 'SA11') {
                     alert('You don\'t have account');
                     refreshToken();
                     getComment();
+                } else if (comment.code === '00') {
+                    for (const data of comment.data.content) {
+                        document.getElementById('card-comment').innerHTML += showComment(data);
+                    }
                 }
-            }))
-            .then(response => {
-                for (const data of response.data.content) {
-                    document.getElementById('card-comment').innerHTML += showComment(data);
-                }
-            })
+            }));
     })
 }
 
 function postComment() {
-    const id = document.getElementById('productSpan').getAttribute('value');
-    const token = localStorage.getItem('token');
-    const message = document.getElementById('new-review').value;
-    const rating = document.getElementById('')
+    const openReviewBox = document.getElementById("open-review-box");
+    const postReviewBox = document.getElementById("post-review-box");
+    const cardComment = document.getElementById("card-comment");
+    const newReview = document.getElementById("new-review");
 
     document.getElementById('save-comment').addEventListener('click', () => {
+        const id = document.getElementById('productSpan').getAttribute('value');
+        const token = localStorage.getItem('token');
+        let message = newReview.value;
+        const rating = pickStar();
+
         fetch(FeedBack, {
             method: 'POST',
-            headers: {'Authorization': `Bearer ${token}`},
-            body: {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json' // Đảm bảo server nhận đúng kiểu dữ liệu
+            },
+            body: JSON.stringify({
                 productId: id,
                 message: message,
                 rating: rating,
-            }
-        }).then(response => response.json().then(data =>{
+            })
+        }).then(response => response.json().then(data => {
             if (data.code === 'SA11') {
                 alert('You don\'t have account');
                 refreshToken();
                 postComment();
+            } else if (data.code === '00') {
+                getComment();
+
+                postReviewBox.style.display = "none";
+                cardComment.style.display = "block";
+                newReview.value = '';
+                openReviewBox.style.display = "inline-block";
             }
         }))
             .then(response => {
@@ -108,11 +124,11 @@ function pickStar() {
                     s.classList.remove('fas'); // Xóa lớp sao đầy
                     s.classList.add('far'); // Thêm lớp sao rỗng
                 }
+                starValue = selectedRating;
             });
-
-            // Hiển thị giá trị đã chọn
         });
     });
+    return starValue;
 }
 
 function showComment(user) {

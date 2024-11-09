@@ -1,4 +1,4 @@
-const env = 'server';
+const env = 'dev';
 
 export const limitProduct = 8;
 
