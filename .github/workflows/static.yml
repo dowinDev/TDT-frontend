@@ -29,5 +29,5 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
       - name: copy source
-        uses: cp -r * /www/wwwroot/food-sharing.btecit.tech
+        run: cp -r * /www/wwwroot/food-sharing.btecit.tech
       
