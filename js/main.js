@@ -171,7 +171,6 @@ function fetchWithRefreshToken() {
                 response.json().then(data => {
                     if (data.code === 'SA11') {
                         refreshToken();
-                        fetchWithRefreshToken();
                     } else if (response.code === '00') {
                         response.json().then(data => console.log('Data:', data));
                     }

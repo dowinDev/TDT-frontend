@@ -48,10 +48,10 @@ function getComment() {
         })
             .then(response => response.json().then(comment => {
                 if (comment.code === 'SA11') {
-                    alert('You don\'t have account');
                     refreshToken();
-                    getComment();
+                    alert('You don\'t have account');
                 } else if (comment.code === '00') {
+                    document.getElementById('card-comment').innerHTML = '';
                     for (const data of comment.data.content) {
                         document.getElementById('card-comment').innerHTML += showComment(data);
                     }

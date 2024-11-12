@@ -5,6 +5,15 @@
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
     color: #2c3e50;
+    margin-bottom:130px;
+}
+.container event-section{
+    margin-top: 50px;
+}
+.event-title1{
+    font-family: 'Playball', cursive;
+    font-size: 2.5rem;
+    color: red;
 }
 
 .event-title {
@@ -17,6 +26,44 @@
     font-size: 1.2rem;
     margin-bottom: 30px;
     color: #34495e;
+}
+.event-images {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.event-image {
+    width: 100px; /* điều chỉnh kích thước hình ảnh tùy ý */
+    height: auto;
+    border-radius: 8px;
+}
+.event-images {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.event-item {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.event-image {
+    width: 100%; /* điều chỉnh kích thước hình ảnh cho vừa với container */
+    max-width: 500px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.event-text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .event-details h2 {
