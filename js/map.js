@@ -179,7 +179,7 @@ function postProduct(formData) {
             } else if (data.code === '00') {
                 alert('Product information has been successfully saved!');
             } else {
-                alert('Failed to save product information. Error: You don\'t have account');
+                alert('Failed to save product information.error: '+ data.message);
             }
             map.flyTo({center: [selectedLng, selectedLat], zoom: 15});
             document.getElementById('formmon').reset();
