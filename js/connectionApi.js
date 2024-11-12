@@ -32,7 +32,7 @@ export const refreshToken = () => {
         body: JSON.stringify({refreshToken: localRefreshToken}),
     }).then(response => response.json().then(data => {
         if (data.status === 200) {
-            const newAccessToken = response.data;
+            const newAccessToken = data.data;
             localStorage.setItem('token', newAccessToken);
         } else {
             if (localRefreshToken !== null) {
