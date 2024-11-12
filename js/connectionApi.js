@@ -1,6 +1,6 @@
 const env = 'server';
 
-export const limitProduct = 8;
+export const limitProduct = 4;
 
 let http = '';
 if (env === 'dev') {
