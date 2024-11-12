@@ -37,6 +37,8 @@ function review() {
     pickStar();
 }
 
+let checkComment = false;
+
 function getComment() {
     const id = document.getElementById('productSpan').getAttribute('value');
     const token = localStorage.getItem('token');
@@ -48,9 +50,15 @@ function getComment() {
         })
             .then(response => response.json().then(comment => {
                 if (comment.code === 'SA11') {
-                    refreshToken();
-                    alert('You don\'t have account');
+                    if (!checkComment) {
+                        refreshToken();
+                        checkComment = true;
+                        getComment();
+                    } else {
+                        alert('You don\'t have account');
+                    }
                 } else if (comment.code === '00') {
+                    checkComment = false;
                     document.getElementById('card-comment').innerHTML = '';
                     for (const data of comment.data.content) {
                         document.getElementById('card-comment').innerHTML += showComment(data);
@@ -59,6 +67,8 @@ function getComment() {
             }));
     })
 }
+
+let checkPost = false;
 
 function postComment() {
     const openReviewBox = document.getElementById("open-review-box");
@@ -85,10 +95,15 @@ function postComment() {
             })
         }).then(response => response.json().then(data => {
             if (data.code === 'SA11') {
-                alert('You don\'t have account');
-                refreshToken();
-                postComment();
+                if (!checkPost) {
+                    refreshToken();
+                    checkPost = true;
+                    postComment();
+                } else {
+                    alert('You don\'t have account');
+                }
             } else if (data.code === '00') {
+                checkPost = false;
                 getComment();
 
                 postReviewBox.style.display = "none";

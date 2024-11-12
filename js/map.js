@@ -156,6 +156,8 @@ document.getElementById('formmon').addEventListener('submit', function (event) {
 });
 
 // Gọi API POST để lưu trữ thông tin
+let count = 1;
+
 function postProduct(formData) {
     const token = localStorage.getItem('token');
     fetch(products, {
@@ -167,13 +169,15 @@ function postProduct(formData) {
     })
         .then(response => response.json().then(data => {
             if (data.code === 'SA11') {
-                alert('You don\'t have account');
-                refreshToken();
-                postProduct(formData);
+                if (count === 2) {
+                    refreshToken();
+                    count = 2;
+                    postProduct(formData);
+                } else {
+                    alert('You don\'t have account');
+                }
             } else if (data.code === '00') {
                 alert('Product information has been successfully saved!');
-
-
             } else {
                 alert('Failed to save product information. Error: You don\'t have account');
             }

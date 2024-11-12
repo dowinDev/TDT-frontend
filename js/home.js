@@ -77,6 +77,8 @@ function orderNow() {
     });
 }
 
+let checkLoadProduct = false;
+
 function loadProductById(id) {
     const token = localStorage.getItem('token');
 
@@ -85,8 +87,11 @@ function loadProductById(id) {
     })
         .then(response => response.json().then(data => {
             if (data.code === 'SA11') {
-                refreshToken();
-                loadProductById(id);
+                if (!checkLoadProduct) {
+                    refreshToken();
+                    checkLoadProduct = true;
+                    loadProductById(id);
+                } else {}
             } else if (data.code === '00') {
                 const product = data.data;
 
