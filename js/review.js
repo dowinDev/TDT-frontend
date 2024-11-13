@@ -40,32 +40,35 @@ function review() {
 let checkComment = false;
 
 function getComment() {
+    document.getElementById('reviews-tab').addEventListener('click', () => {
+        get();
+    })
+}
+
+function get(){
     const id = document.getElementById('productSpan').getAttribute('value');
     const token = localStorage.getItem('token');
-
-    document.getElementById('reviews-tab').addEventListener('click', () => {
-        fetch(FeedBack + `?productId=${id}`, {
-            method: 'GET',
-            headers: {'Authorization': `Bearer ${token}`},
-        })
-            .then(response => response.json().then(comment => {
-                if (comment.code === 'SA11') {
-                    if (!checkComment) {
-                        refreshToken();
-                        checkComment = true;
-                        getComment();
-                    } else {
-                        alert('You don\'t have account');
-                    }
-                } else if (comment.code === '00') {
-                    checkComment = false;
-                    document.getElementById('card-comment').innerHTML = '';
-                    for (const data of comment.data.content) {
-                        document.getElementById('card-comment').innerHTML += showComment(data);
-                    }
-                }
-            }));
+    fetch(FeedBack + `?productId=${id}`, {
+        method: 'GET',
+        headers: {'Authorization': `Bearer ${token}`},
     })
+        .then(response => response.json().then(comment => {
+            if (comment.code === 'SA11') {
+                if (!checkComment) {
+                    refreshToken();
+                    checkComment = true;
+                    getComment();
+                } else {
+                    alert('You don\'t have account');
+                }
+            } else if (comment.code === '00') {
+                checkComment = false;
+                document.getElementById('card-comment').innerHTML = '';
+                for (const data of comment.data.content) {
+                    document.getElementById('card-comment').innerHTML += showComment(data);
+                }
+            }
+        }));
 }
 
 let checkPost = false;
@@ -104,12 +107,13 @@ function postComment() {
                 }
             } else if (data.code === '00') {
                 checkPost = false;
-                getComment();
 
                 postReviewBox.style.display = "none";
                 cardComment.style.display = "block";
                 newReview.value = '';
                 openReviewBox.style.display = "inline-block";
+                get();
+
             }
         }))
             .then(response => {

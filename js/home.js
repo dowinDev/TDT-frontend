@@ -204,6 +204,7 @@ function createProductHTML(product) {
                 <p><strong>Quantity:</strong> ${product.quantity}</p>
                 <p class="price">${product.price === "Free" ? "Free" :
         Number(product.price).toLocaleString("de-DE") + " đ"}</p>
+                <p><strong>Store:</strong> ${product.eatery.nameStore}</p>
                 <button id="btn-orderNow" class="button" value="${product.id}">Order Now</button>
             </div>
         </div>
